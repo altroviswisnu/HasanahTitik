@@ -24,16 +24,17 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBlQPg1zHvDISL91CiyCW6K98RXeKQ7Ntc" />
-
+        <activity android:name=".SplashScreenActivity"
+            android:theme="@style/AppThemeNoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppThemeNoTitleBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".HajiUmrohActivity" />
         <activity android:name=".MigranHasanahActivity" />
@@ -57,7 +58,8 @@
         <activity android:name=".LokasiATMListActivity" />
         <activity android:name=".LokasiRumahSakitListActivity" />
         <activity android:name=".KalkulatorDanaActivity" />
-        <activity android:name=".KalkulatorPembiayanActivity"></activity>
+        <activity android:name=".KalkulatorPembiayanActivity" />
+
     </application>
 
 </manifest>

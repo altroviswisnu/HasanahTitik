@@ -7,21 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.altrovis.hasanahtitik.Business.DatabaseHelper;
-
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
-            databaseHelper.createDataBase();
-            databaseHelper.openDataBase();
-            databaseHelper.close();
-        } catch (Exception e){}
 
     }
 
