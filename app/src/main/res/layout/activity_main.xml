@@ -1,0 +1,98 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.altrovis.hasanahtitik.ActivityMain">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutMofalink"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:layout_marginTop="35dp"
+                android:text="Hasanah Titik"
+                android:textSize="45dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutMenu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical">
+
+
+                <Button
+                    android:id="@+id/ButtonNews"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@drawable/background_button_top"
+                    android:drawableLeft="@drawable/icon_news"
+                    android:gravity="left|center_vertical"
+                    android:onClick="goToPageHasanahTitik"
+                    android:text="Hasanah Titik"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp" />
+
+
+                <Button
+                    android:id="@+id/ButtonAlerts"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_button"
+                    android:drawableLeft="@drawable/icon_alert"
+                    android:gravity="left|center_vertical"
+                    android:onClick="goToPageMigranHasanah"
+                    android:text="Migran Hasanah"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/ButtonEmbassies"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_button_bottom"
+                    android:drawableLeft="@drawable/icon_embassies"
+                    android:gravity="left|center_vertical"
+                    android:onClick="goToPageHajiUmroh"
+                    android:text="Haji dan Umroh"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

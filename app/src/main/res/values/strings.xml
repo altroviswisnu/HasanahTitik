@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">HasanahTitik</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="MenuHajiUmroh">
+        <item>Doa-Doa Manasik</item>
+        <item>Lokasi Rumah Sakit</item>
+        <item>Lokasi Rumah Makan</item>
+        <item>Daerah Kerja</item>
+        <item>Lokasi ATM</item>
+        <item>Arah Kiblat</item>
+        <item>Waktu Sholat</item>
+        <item>Jadwal Bus</item>
+        <item>Fitur Kartu Haji dan Umroh</item>
+        <item>Cara Penggunaan dan Jika Kartu Hilang</item>
+        <item>Masjidil Haram dan Nabawi</item>
+    </string-array>
+
+    <string-array name="MenuMigranHasanah">
+        <item>Kumpulan Doa Sehari-hari</item>
+        <item>Lokasi Masjid di Hongkong dan Taiwan</item>
+        <item>Lokasi Remittance</item>
+        <item>Jadwal Transportasi Umum</item>
+        <item>Jadwal Pengajian di Hongkong dan Taiwan</item>
+        <item>Arah Kiblat</item>
+        <item>Waktu Sholat</item>
+        <item>Fitur Kartu Migran Hasanah</item>
+        <item>Cara Penggunaan Kartu Hasanah</item>
+    </string-array>
+
+    <string-array name="MenuHasanahTitik">
+        <item>Hasanah Promo</item>
+        <item>Hasanah Kalkulator</item>
+        <item>Harga Emas Terkini</item>
+        <item>Hasanah News</item>
+        <item>Hasanah Tips dan Produk</item>
+        <item>Lokasi ATM</item>
+        <item>Cabang</item>
+        <item>Quiz</item>
+        <item>Juz Amma</item>
+        <item>Waktu Sholat</item>
+    </string-array>
+
+    <string-array name="WilayahSholat">
+        <item>Jakarta Utara</item>
+        <item>Jakarta Barat</item>
+        <item>Jakarta Pusat</item>
+        <item>Jakarta Timur</item>
+        <item>Jakarta Selatan</item>
+    </string-array>
+
+    <string-array name="MenuHasanahKalkulator">
+        <item>Kalkulator Dana</item>
+        <item>Kalkulator Pembiayaan</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_hasanah_kalkulator">HasanahKalkulator</string>
+
+</resources>

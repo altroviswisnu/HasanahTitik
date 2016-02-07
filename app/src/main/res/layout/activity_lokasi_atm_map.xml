@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".LokasiATMMapActivity">
+
+    <fragment
+        android:id="@+id/mapATM"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageButton
+        android:id="@+id/ImageButtonListATM"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@mipmap/button_kedutaan"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="7sp"
+        android:layout_marginRight="50sp"/>
+
+</RelativeLayout>
