@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.altrovis.hasanahtitik.Business.LokasiATMHelper;
+import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.LokasiATM;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,7 +50,7 @@ public class LokasiATMMapActivity extends Activity {
             }
             googleMapATM.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-            ArrayList<LokasiATM> listOfATM = LokasiATMHelper.getAllATM(this);
+            ArrayList<LokasiATM> listOfATM = LokasiATMHelper.getListOfATMFromWebService(this, GlobalVariable.UrlLokasiATM);
             for (int i = 0; i < listOfATM.size(); i++) {
                 LokasiATM atm = listOfATM.get(i);
                 final LatLng koordinatATM = new LatLng(atm.getLatitude(), atm.getLongitude());

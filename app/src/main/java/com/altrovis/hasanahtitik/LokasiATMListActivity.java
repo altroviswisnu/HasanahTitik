@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.altrovis.hasanahtitik.Business.LokasiATMAdapter;
 import com.altrovis.hasanahtitik.Business.LokasiATMHelper;
+import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.LokasiATM;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class LokasiATMListActivity extends Activity {
         listViewLokasiATM = (ListView) findViewById(R.id.ListViewLokasiATM);
         try {
 
-            listofATM = LokasiATMHelper.getAllATM(this);
+            listofATM = LokasiATMHelper.getListOfATMFromWebService(this, GlobalVariable.UrlLokasiATM);
             LokasiATMAdapter adapter = new LokasiATMAdapter(this, R.layout.list_view_lokasi_atm, listofATM);
             listViewLokasiATM.setAdapter(adapter);
 

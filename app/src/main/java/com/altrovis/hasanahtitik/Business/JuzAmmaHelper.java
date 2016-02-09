@@ -5,7 +5,7 @@ import com.altrovis.hasanahtitik.Entitties.JuzAmma;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +30,7 @@ public class JuzAmmaHelper {
                     JuzAmma juzAmma = new JuzAmma();
                     juzAmma.setID(detailJuzAmma.getInt(TAG_ID));
                     juzAmma.setNama(detailJuzAmma.getString(TAG_JUDUL));
-                    juzAmma.setUrlWebView(URLEncoder.encode(detailJuzAmma.getString(TAG_URL),"UTF-8"));
+                    juzAmma.setUrlWebView(URLDecoder.decode(detailJuzAmma.getString(TAG_URL), "UTF-8"));
                     listOfJuzAmma.add(juzAmma);
                 }
             }

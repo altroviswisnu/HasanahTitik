@@ -5,7 +5,7 @@ import com.altrovis.hasanahtitik.Entitties.DoaManasik;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +30,7 @@ public class DoaManasikHelper {
                     DoaManasik doaManasik = new DoaManasik();
                     doaManasik.setID(detailDoaManasik.getInt(TAG_ID));
                     doaManasik.setNama(detailDoaManasik.getString(TAG_JUDUL));
-                    doaManasik.setUrlWebView(URLEncoder.encode(detailDoaManasik.getString(TAG_URL), "UTF-8"));
+                    doaManasik.setUrlWebView(URLDecoder.decode(detailDoaManasik.getString(TAG_URL), "UTF-8"));
                     listOfDoaManasik.add(doaManasik);
                 }
             }

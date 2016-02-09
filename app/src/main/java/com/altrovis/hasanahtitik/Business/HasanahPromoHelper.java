@@ -32,7 +32,7 @@ public class HasanahPromoHelper {
                     HasanahPromo hasanahPromo = new HasanahPromo();
                     hasanahPromo.setID(detailHasanahPromo.getInt(TAG_ID));
                     hasanahPromo.setNama(detailHasanahPromo.getString(TAG_JUDUL));
-                    hasanahPromo.setCOntents(detailHasanahPromo.getString(TAG_CONTENTS));
+                    hasanahPromo.setContents(detailHasanahPromo.getString(TAG_CONTENTS));
                     hasanahPromo.setDateCreated(detailHasanahPromo.getString(TAG_DATE_CREATED));
                     hasanahPromo.setDateStart(detailHasanahPromo.getString(TAG_DATE_START));
                     hasanahPromo.setDateEnd(detailHasanahPromo.getString(TAG_DATE_END));

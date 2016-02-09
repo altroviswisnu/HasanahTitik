@@ -1,10 +1,12 @@
 package com.altrovis.hasanahtitik;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.altrovis.hasanahtitik.Business.GridViewAdapter;
@@ -30,7 +32,7 @@ public class HajiUmrohFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_haji_umroh, container, false);
 
         GridView gridView = (GridView) view.findViewById(R.id.GridViewMenu);
-        ArrayList<ItemMenu> listOfMenu = new ArrayList<ItemMenu>();
+        final ArrayList<ItemMenu> listOfMenu = new ArrayList<ItemMenu>();
         listOfMenu.add(new ItemMenu(1, "Doa Manasik", R.drawable.doamanasik));
         listOfMenu.add(new ItemMenu(2, "Rumah Sakit", R.drawable.rumahsakit));
         listOfMenu.add(new ItemMenu(3, "Kiblat", R.drawable.arahkiblat));
@@ -38,6 +40,24 @@ public class HajiUmrohFragment extends Fragment {
         listOfMenu.add(new ItemMenu(5, "Jadwal Bus", R.drawable.jadwalbus));
         GridViewAdapter adapter = new GridViewAdapter(getContext(), R.layout.gridview_item_menu, listOfMenu);
         gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listOfMenu.get(position).getID() == 1) {
+                    Intent intent = new Intent(getActivity(), DoaManasikListActivity.class);
+                    startActivity(intent);
+                } else if (listOfMenu.get(position).getID() == 2) {
+
+                } else if (listOfMenu.get(position).getID() == 3) {
+
+                } else if (listOfMenu.get(position).getID() == 4) {
+
+                } else if (listOfMenu.get(position).getID() == 5) {
+
+                }
+            }
+        });
 
         return view;
     }

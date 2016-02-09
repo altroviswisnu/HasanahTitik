@@ -6,9 +6,10 @@ package com.altrovis.hasanahtitik.Entitties;
 public class GlobalVariable {
 
     public static String UrlWebView = "";
+    public static String TitleActionBar = "";
 
     public static String UrlDoaHarian = "http://poc.raufan.com/BNIMobileService/GetListOfDoa";
-    public static String UrlDoaManasik = "";
+    public static String UrlDoaManasik = "http://poc.raufan.com/BNIMobileService/GetListOfDoaManasik";
     public static String UrlJuzAmma = "http://poc.raufan.com/BNIMobileService/GetListOfJuzAmma";
 
     public static String UrlLokasiRumahSakit = "http://poc.raufan.com/BNIMobileService/GetListOfRumahSakit";

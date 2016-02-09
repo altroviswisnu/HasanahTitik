@@ -5,7 +5,7 @@ import com.altrovis.hasanahtitik.Entitties.DoaHarian;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +30,7 @@ public class DoaHarianHelper {
                     DoaHarian doaHarian = new DoaHarian();
                     doaHarian.setID(detailDoaHarian.getInt(TAG_ID));
                     doaHarian.setNama(detailDoaHarian.getString(TAG_JUDUL));
-                    doaHarian.setUrlWebView(URLEncoder.encode(detailDoaHarian.getString(TAG_URL), "UTF-8"));
+                    doaHarian.setUrlWebView(URLDecoder.decode(detailDoaHarian.getString(TAG_URL), "UTF-8"));
                     listOfDoaHarian.add(doaHarian);
                 }
             }

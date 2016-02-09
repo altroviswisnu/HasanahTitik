@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.altrovis.hasanahtitik.Business.LokasiRumahSakitHelper;
+import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.LokasiRumahSakit;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,7 +50,7 @@ public class LokasiRumahSakitMapActivity extends Activity {
             }
             googleMapRumahsakit.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-            ArrayList<LokasiRumahSakit> listOfRumahSakit = LokasiRumahSakitHelper.getAllRumahSakit(this);
+            ArrayList<LokasiRumahSakit> listOfRumahSakit = LokasiRumahSakitHelper.getListOfRumahSakitFromWebService(this, GlobalVariable.UrlLokasiRumahSakit);
             for (int i = 0; i < listOfRumahSakit.size(); i++) {
                 LokasiRumahSakit rumahSakit = listOfRumahSakit.get(i);
                 final  LatLng koordinatRumahSakit = new LatLng(rumahSakit.getLatitude(), rumahSakit.getLongitude());
