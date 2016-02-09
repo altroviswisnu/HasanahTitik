@@ -27,7 +27,7 @@ public class JadwalSholatAdapter extends ArrayAdapter<JadwalSholat> {
     DateFormat dateFormat;
 
     public JadwalSholatAdapter(Context context, int resource, ArrayList<JadwalSholat> listOfJadwalSholat) {
-        super(context, resource);
+        super(context, resource, listOfJadwalSholat);
 
         this.context = context;
         this.resource = resource;

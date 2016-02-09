@@ -21,7 +21,7 @@ public class HasanahPromoAdapter extends ArrayAdapter<HasanahPromo> {
     ArrayList<HasanahPromo> listOfHasanahPromo;
 
     public HasanahPromoAdapter(Context context, int resource, ArrayList<HasanahPromo> listOfHasanahPromo) {
-        super(context, resource);
+        super(context, resource, listOfHasanahPromo);
 
         this.context = context;
         this.resource = resource;

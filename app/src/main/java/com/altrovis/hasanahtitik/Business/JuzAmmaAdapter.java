@@ -21,7 +21,7 @@ public class JuzAmmaAdapter extends ArrayAdapter<JuzAmma> {
     ArrayList<JuzAmma> listOfJuzAmma;
 
     public JuzAmmaAdapter(Context context, int resource, ArrayList<JuzAmma> listOfJuzAmma) {
-        super(context, resource);
+        super(context, resource, listOfJuzAmma);
 
         this.context = context;
         this.resource = resource;

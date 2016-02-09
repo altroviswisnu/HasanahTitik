@@ -23,7 +23,7 @@ public class LokasiATMAdapter extends ArrayAdapter<LokasiATM> {
     ArrayList<LokasiATM> listOfATM;
 
     public LokasiATMAdapter(Context context, int resource, ArrayList<LokasiATM> listOfATM) {
-        super(context, resource);
+        super(context, resource, listOfATM);
 
         this.context = context;
         this.resource = resource;

@@ -21,7 +21,7 @@ public class DoaManasikAdapter extends ArrayAdapter<DoaManasik> {
     ArrayList<DoaManasik> listOfDoaManasik;
 
     public DoaManasikAdapter(Context context, int resource, ArrayList<DoaManasik> listOfDoaManasik) {
-        super(context, resource);
+        super(context, resource, listOfDoaManasik);
 
         this.context = context;
         this.resource = resource;
