@@ -18,4 +18,6 @@ public class GlobalVariable {
     public static String UrlKartuMigran = "http://poc.raufan.com/BNIMobileService/GetFiturKartu";
     public static String UrlJadwalBus = "http://poc.raufan.com/BNIMobileService/GetJadwalBus";
 
+    public static HasanahPromo SelectedPromo;
+
 }

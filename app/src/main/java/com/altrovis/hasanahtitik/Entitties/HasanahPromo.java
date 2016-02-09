@@ -7,7 +7,7 @@ public class HasanahPromo {
 
     private int ID;
     private String Nama;
-    private String COntents;
+    private String Contents;
     private String DateCreated;
     private String DateStart;
     private String DateEnd;
@@ -28,12 +28,12 @@ public class HasanahPromo {
         Nama = nama;
     }
 
-    public String getCOntents() {
-        return COntents;
+    public String getContents() {
+        return Contents;
     }
 
-    public void setCOntents(String COntents) {
-        this.COntents = COntents;
+    public void setContents(String contents) {
+        Contents = contents;
     }
 
     public String getDateCreated() {

@@ -42,7 +42,7 @@ public class HasanahPromoListActivity extends Activity {
             listViewHasanahPromo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    GlobalVariable.UrlWebView = listofHasanahPromo.get(position).getUrlWebView();
+                    GlobalVariable.SelectedPromo = listofHasanahPromo.get(position);
                     Intent intent = new Intent(HasanahPromoListActivity.this, DoaHarianDetailActivity.class);
                     startActivity(intent);
                 }
