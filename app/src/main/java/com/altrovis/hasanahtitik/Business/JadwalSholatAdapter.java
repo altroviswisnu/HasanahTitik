@@ -26,12 +26,12 @@ public class JadwalSholatAdapter extends ArrayAdapter<JadwalSholat> {
     ArrayList<JadwalSholat> listOfJadwalSholat;
     DateFormat dateFormat;
 
-    public JadwalSholatAdapter(Context context, int resource, ArrayList<JadwalSholat> listJadwalSholat) {
-        super(context, resource, listJadwalSholat);
+    public JadwalSholatAdapter(Context context, int resource, ArrayList<JadwalSholat> listOfJadwalSholat) {
+        super(context, resource, listOfJadwalSholat);
 
         this.context = context;
         this.resource = resource;
-        this.listOfJadwalSholat = listJadwalSholat;
+        this.listOfJadwalSholat = listOfJadwalSholat;
 
         dateFormat = new SimpleDateFormat("HH:mm", new Locale("id", "ID"));
     }

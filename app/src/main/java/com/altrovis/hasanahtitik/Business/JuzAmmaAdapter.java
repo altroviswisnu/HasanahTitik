@@ -20,12 +20,12 @@ public class JuzAmmaAdapter extends ArrayAdapter<JuzAmma> {
     int resource;
     ArrayList<JuzAmma> listOfJuzAmma;
 
-    public JuzAmmaAdapter(Context context, int resource, ArrayList<JuzAmma> listJuzAmma) {
-        super(context, resource, listJuzAmma);
+    public JuzAmmaAdapter(Context context, int resource, ArrayList<JuzAmma> listOfJuzAmma) {
+        super(context, resource, listOfJuzAmma);
 
         this.context = context;
         this.resource = resource;
-        this.listOfJuzAmma = listJuzAmma;
+        this.listOfJuzAmma = listOfJuzAmma;
     }
 
     @Override
