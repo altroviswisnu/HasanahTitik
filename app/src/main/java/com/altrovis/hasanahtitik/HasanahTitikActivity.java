@@ -2,15 +2,11 @@ package com.altrovis.hasanahtitik;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.altrovis.hasanahtitik.Business.ItemMenuAdapter;
 import com.altrovis.hasanahtitik.Entitties.ItemMenu;
 
 import java.util.ArrayList;
@@ -36,6 +32,7 @@ public class HasanahTitikActivity extends Activity {
         String[] listMenu = getResources().getStringArray(R.array.MenuHasanahTitik);
         listofItemMenu = new ArrayList<ItemMenu>();
 
+        /*
         for(int i = 0; i < listMenu.length; i++) {
             ItemMenu itemMenu = new ItemMenu();
             itemMenu.setID(i);
@@ -43,7 +40,7 @@ public class HasanahTitikActivity extends Activity {
             listofItemMenu.add(itemMenu);
         }
 
-        ItemMenuAdapter adapter = new ItemMenuAdapter(this, R.layout.list_view_item_menu, listofItemMenu);
+        GridViewAdapter adapter = new GridViewAdapter(this, R.layout.list_view_item_menu, listofItemMenu);
         listViewHasanahTitik.setAdapter(adapter);
 
         listViewHasanahTitik.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,6 +75,7 @@ public class HasanahTitikActivity extends Activity {
                 }
             }
         });
+        */
     }
 
     @Override

@@ -2,15 +2,11 @@ package com.altrovis.hasanahtitik;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.altrovis.hasanahtitik.Business.ItemMenuAdapter;
 import com.altrovis.hasanahtitik.Entitties.ItemMenu;
 
 import java.util.ArrayList;
@@ -32,6 +28,7 @@ public class MigranHasanahActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
 
+        /*
         listViewMigranHasanah = (ListView) findViewById(R.id.ListViewMigranHasanah);
         String[] listMenu = getResources().getStringArray(R.array.MenuMigranHasanah);
         listofItemMenu = new ArrayList<ItemMenu>();
@@ -43,7 +40,7 @@ public class MigranHasanahActivity extends Activity {
             listofItemMenu.add(itemMenu);
         }
 
-        ItemMenuAdapter adapter = new ItemMenuAdapter(this, R.layout.list_view_item_menu, listofItemMenu);
+        GridViewAdapter adapter = new GridViewAdapter(this, R.layout.list_view_item_menu, listofItemMenu);
         listViewMigranHasanah.setAdapter(adapter);
 
         listViewMigranHasanah.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,7 +71,7 @@ public class MigranHasanahActivity extends Activity {
                 }
             }
         });
-
+        */
     }
 
     @Override

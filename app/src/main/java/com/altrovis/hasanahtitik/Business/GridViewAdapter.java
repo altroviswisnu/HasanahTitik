@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.altrovis.hasanahtitik.Entitties.ItemMenu;
@@ -16,13 +17,13 @@ import java.util.ArrayList;
 /**
  * Created by Wisnu on 02/02/2016.
  */
-public class ItemMenuAdapter extends ArrayAdapter<ItemMenu> {
+public class GridViewAdapter extends ArrayAdapter<ItemMenu> {
 
     Context context;
     int resource;
     ArrayList<ItemMenu> listOfItemMenu;
 
-    public ItemMenuAdapter(Context context, int resource, ArrayList<ItemMenu> listOfItemMenu) {
+    public GridViewAdapter(Context context, int resource, ArrayList<ItemMenu> listOfItemMenu) {
         super(context, resource, listOfItemMenu);
 
         this.context = context;
@@ -39,8 +40,12 @@ public class ItemMenuAdapter extends ArrayAdapter<ItemMenu> {
         }
 
         ItemMenu itemMenu = listOfItemMenu.get(position);
-        TextView textViewMenuItem = (TextView) view.findViewById(R.id.TextViewMenuItem);
-        textViewMenuItem.setText(itemMenu.getNama());
+
+        TextView textViewNamaMenu = (TextView) view.findViewById(R.id.TextViewNamaMenu);
+        textViewNamaMenu.setText(itemMenu.getNama());
+
+        ImageView imageViewMenuIcon = (ImageView) view.findViewById(R.id.ImageViewIconMenu);
+        imageViewMenuIcon.setImageResource(itemMenu.getIconSource());
 
         return view;
     }

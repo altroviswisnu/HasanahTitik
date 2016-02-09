@@ -2,15 +2,11 @@ package com.altrovis.hasanahtitik;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.altrovis.hasanahtitik.Business.ItemMenuAdapter;
 import com.altrovis.hasanahtitik.Entitties.ItemMenu;
 
 import java.util.ArrayList;
@@ -31,6 +27,7 @@ public class HasanahKalkulatorActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
 
+        /*
         listViewHasanahKalkulator = (ListView) findViewById(R.id.ListViewHasanahKalkulator);
         String[] listMenu = getResources().getStringArray(R.array.MenuHasanahKalkulator);
         listofItemMenu = new ArrayList<ItemMenu>();
@@ -42,7 +39,7 @@ public class HasanahKalkulatorActivity extends Activity {
             listofItemMenu.add(itemMenu);
         }
 
-        ItemMenuAdapter adapter = new ItemMenuAdapter(this, R.layout.list_view_item_menu, listofItemMenu);
+        GridViewAdapter adapter = new GridViewAdapter(this, R.layout.list_view_item_menu, listofItemMenu);
         listViewHasanahKalkulator.setAdapter(adapter);
 
         listViewHasanahKalkulator.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,6 +54,7 @@ public class HasanahKalkulatorActivity extends Activity {
                 } 
             }
         });
+        */
     }
 
     @Override
