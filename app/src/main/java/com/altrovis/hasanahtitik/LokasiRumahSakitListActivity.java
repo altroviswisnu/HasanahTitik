@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.altrovis.hasanahtitik.Business.LokasiRumahSakitAdapter;
 import com.altrovis.hasanahtitik.Business.LokasiRumahSakitHelper;
+import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.LokasiRumahSakit;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class LokasiRumahSakitListActivity extends Activity {
         listViewLokasiRumahSakit = (ListView) findViewById(R.id.ListViewLokasiRumahSakit);
         try {
 
-            listofRumahSakit = LokasiRumahSakitHelper.getAllRumahSakit(this);
+            listofRumahSakit = LokasiRumahSakitHelper.getListOfRumahSakitFromWebService(this, GlobalVariable.UrlLokasiRumahSakit);
             LokasiRumahSakitAdapter adapter = new LokasiRumahSakitAdapter(this, R.layout.list_view_rumah_sakit, listofRumahSakit);
             listViewLokasiRumahSakit.setAdapter(adapter);
 

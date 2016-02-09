@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.altrovis.hasanahtitik.Entitties.DoaManasik;
+import com.altrovis.hasanahtitik.R;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,9 @@ public class DoaManasikAdapter extends ArrayAdapter<DoaManasik> {
         }
 
         DoaManasik doaManasik = listOfDoaManasik.get(position);
+
+        TextView textViewDoaManasik = (TextView) view.findViewById(R.id.TextViewDoaManasik);
+        textViewDoaManasik.setText(doaManasik.getNama());
         
         return view;
     }

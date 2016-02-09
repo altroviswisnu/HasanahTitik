@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.altrovis.hasanahtitik.Entitties.HasanahPromo;
+import com.altrovis.hasanahtitik.R;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,9 @@ public class HasanahPromoAdapter extends ArrayAdapter<HasanahPromo> {
         }
 
         HasanahPromo hasanahPromo = listOfHasanahPromo.get(position);
+
+        TextView textViewHasanahPromo = (TextView) view.findViewById(R.id.TextViewHasanahPromo);
+        textViewHasanahPromo.setText(hasanahPromo.getNama());
 
         return view;
     }

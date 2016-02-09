@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.altrovis.hasanahtitik.Entitties.JuzAmma;
+import com.altrovis.hasanahtitik.R;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,9 @@ public class JuzAmmaAdapter extends ArrayAdapter<JuzAmma> {
         }
 
         JuzAmma juzAmma = listOfJuzAmma.get(position);
+
+        TextView textViewJuzAmma = (TextView) view.findViewById(R.id.TextViewJuzAmma);
+        textViewJuzAmma.setText(juzAmma.getNama());
 
         return view;
     }

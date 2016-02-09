@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.altrovis.hasanahtitik.Entitties.DoaHarian;
+import com.altrovis.hasanahtitik.R;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,9 @@ public class DoaHarianAdapter extends ArrayAdapter<DoaHarian> {
         }
 
         DoaHarian doaHarian = listOfDoaHarian.get(position);
+
+        TextView textViewDoaHarian = (TextView) view.findViewById(R.id.TextViewDoaHarian);
+        textViewDoaHarian.setText(doaHarian.getNama());
 
         return view;
     }
