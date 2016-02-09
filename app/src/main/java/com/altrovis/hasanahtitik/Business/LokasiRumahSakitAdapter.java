@@ -22,12 +22,12 @@ public class LokasiRumahSakitAdapter extends ArrayAdapter<LokasiRumahSakit> {
     int resource;
     ArrayList<LokasiRumahSakit> listOfRumahSakit;
 
-    public LokasiRumahSakitAdapter(Context context, int resource, ArrayList<LokasiRumahSakit> listOfRumahSakit) {
-        super(context, resource, listOfRumahSakit);
+    public LokasiRumahSakitAdapter(Context context, int resource, ArrayList<LokasiRumahSakit> listRumahSakit) {
+        super(context, resource, listRumahSakit);
 
         this.context = context;
         this.resource = resource;
-        this.listOfRumahSakit = listOfRumahSakit;
+        this.listOfRumahSakit = listRumahSakit;
     }
 
     @Override

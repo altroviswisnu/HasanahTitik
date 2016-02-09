@@ -22,12 +22,12 @@ public class HargaEmasAdapter extends ArrayAdapter<HargaEmas> {
     int resource;
     ArrayList<HargaEmas> listOfHargaEmas;
 
-    public HargaEmasAdapter(Context context, int resource, ArrayList<HargaEmas> listOfHargaEmas) {
-        super(context, resource, listOfHargaEmas);
+    public HargaEmasAdapter(Context context, int resource, ArrayList<HargaEmas> listHargaEmas) {
+        super(context, resource, listHargaEmas);
 
         this.context = context;
         this.resource = resource;
-        this.listOfHargaEmas = listOfHargaEmas;
+        this.listOfHargaEmas = listHargaEmas;
     }
 
     @Override

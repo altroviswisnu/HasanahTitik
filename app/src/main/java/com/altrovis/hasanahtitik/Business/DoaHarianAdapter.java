@@ -20,12 +20,12 @@ public class DoaHarianAdapter extends ArrayAdapter<DoaHarian> {
     int resource;
     ArrayList<DoaHarian> listOfDoaHarian;
 
-    public DoaHarianAdapter(Context context, int resource, ArrayList<DoaHarian> listOfDoaHarian) {
-        super(context, resource,listOfDoaHarian);
+    public DoaHarianAdapter(Context context, int resource, ArrayList<DoaHarian> listDoaHarian) {
+        super(context, resource,listDoaHarian);
 
         this.context = context;
         this.resource = resource;
-        this.listOfDoaHarian = listOfDoaHarian;
+        this.listOfDoaHarian = listDoaHarian;
     }
 
     @Override
