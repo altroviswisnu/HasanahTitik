@@ -14,9 +14,9 @@ import com.altrovis.hasanahtitik.Entitties.ItemMenu;
 
 import java.util.ArrayList;
 
-public class HasanahTitikFragment extends Fragment {
+public class HasanahTitikkFragment extends Fragment {
 
-    public HasanahTitikFragment() {
+    public HasanahTitikkFragment() {
     }
 
     @Override
