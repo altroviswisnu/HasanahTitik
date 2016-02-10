@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -86,6 +87,9 @@ public class JadwalSholatActivity extends AppCompatActivity implements OnDateSel
         textViewTanggalSekarang = (TextView)findViewById(R.id.TextViewTanggalSekarang);
 
         calendarViewWeek = (MaterialCalendarView) findViewById(R.id.CalendarViewWeek);
+
+        calendarViewWeek.setOnDateChangedListener(this);
+
         calendarViewWeek.setTopbarVisible(false);
 
         calendarViewWeek.setShowOtherDates(MaterialCalendarView.SHOW_ALL);
@@ -99,7 +103,11 @@ public class JadwalSholatActivity extends AppCompatActivity implements OnDateSel
 
         calendarViewWeek.setCalendarDisplayMode(CalendarMode.WEEKS);
 
-        calendarViewWeek.setCurrentDate(calendarViewWeek.getSelectedDate(), true);
+
+        Calendar calendarOffset = (Calendar)calendar.clone();
+        calendarOffset.add(Calendar.DAY_OF_YEAR, 7);
+
+        calendarViewWeek.setCurrentDate(CalendarDay.from(calendarOffset), true);
 
         SimpleDateFormat dateFormatCurrentDate = new SimpleDateFormat("d MMMM y", new Locale("id", "ID"));
         String TanggalMasehi = dateFormatCurrentDate.format(calendar.getTime());
@@ -136,7 +144,7 @@ public class JadwalSholatActivity extends AppCompatActivity implements OnDateSel
             prayers.tune(offsets);
 
             Calendar cal = Calendar.getInstance();
-            cal.setTime(calendarViewWeek.getCurrentDate().getDate());
+            cal.setTime(calendarViewWeek.getSelectedDate().getDate());
 
             ArrayList prayerTimes = prayers.getPrayerTimes(cal, latitude,
                     longitude, timezone);
@@ -191,7 +199,7 @@ public class JadwalSholatActivity extends AppCompatActivity implements OnDateSel
             prayers.tune(offsets);
 
             Calendar cal = Calendar.getInstance();
-            cal.setTime(calendarViewWeek.getCurrentDate().getDate());
+            cal.setTime(calendarViewWeek.getSelectedDate().getDate());
 
             ArrayList prayerTimes = prayers.getPrayerTimes(cal, latitude,
                     longitude, timezone);

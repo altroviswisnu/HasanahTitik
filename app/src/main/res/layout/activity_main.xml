@@ -15,116 +15,121 @@
             android:layout_height="140dp"
             android:background="@drawable/background">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/LayoutLokasi"
-                        android:layout_width="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="3dp">
-
-                        <ImageView
-                            android:id="@+id/ImageViewLokasi"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/pin" />
-
-                        <TextView
-                            android:id="@+id/TextViewLokasi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="Jakarta" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/LayoutLokasi"
-                        android:background="@drawable/logo" />
-                </RelativeLayout>
-            </LinearLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:id="@+id/LayoutLokasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ImageViewLokasi"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/pin" />
+
+                    <TextView
+                        android:id="@+id/TextViewLokasi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="..."
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/logo" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/LinearLayoutWaktu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginBottom="20dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/TextViewCurrentTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
-                        android:text="18.02"
-                        android:textSize="44dp"
-                        android:textStyle="bold" />
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/TextViewNextSholat"
+                            android:id="@+id/TextViewCurrentTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Maghrib" />
+                            android:layout_marginRight="15dp"
+                            android:text="00.00"
+                            android:textColor="@android:color/white"
+                            android:textSize="44dp"
+                            android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/TextViewTimeToNextSholat"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="15m" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/TextViewNextSholat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="..."
+                                android:textColor="@android:color/white" />
+
+                            <TextView
+                                android:id="@+id/TextViewTimeToNextSholat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="..."
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/LinearLayoutWaktu"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/TextViewCurrentDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="05 Feb 2016 / 12 Rabiul Awal 1437 H" />
+                        android:text="... / ..."
+                        android:textColor="@android:color/white" />
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/settings" />
-                </RelativeLayout>
-            </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/settings" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
 
         <android.support.design.widget.TabLayout

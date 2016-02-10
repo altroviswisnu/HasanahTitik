@@ -9,10 +9,10 @@
         android:id="@+id/TextViewDoaManasik"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
-        android:paddingTop="6dip"
+        android:paddingBottom="2dp"
+        android:paddingTop="6dp"
         android:textColor="#111"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
 </LinearLayout>

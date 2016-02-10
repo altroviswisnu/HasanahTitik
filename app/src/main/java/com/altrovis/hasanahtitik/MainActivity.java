@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.altrovis.hasanahtitik.Business.DateHijri;
+import com.altrovis.hasanahtitik.Business.PrayTime;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,6 +37,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,9 +45,12 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     TextView textViewLokasi;
+
     TextView textViewCurrentTime;
+    TextView textViewNextSholat;
+    TextView textViewTimeToNextSholat;
+
     TextView textViewCurrentDate;
-    DateFormat dateFormatCurrentTime;
     DateFormat dateFormatCurrentDate;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -77,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
         SetCurrentLocalDate();
 
         textViewCurrentTime = (TextView) findViewById(R.id.TextViewCurrentTime);
-        dateFormatCurrentTime = new SimpleDateFormat("HH:mm", new Locale("id", "ID"));
-        SetCurrentLocalTime();
+        textViewNextSholat = (TextView) findViewById(R.id.TextViewNextSholat);
+        textViewTimeToNextSholat = (TextView) findViewById(R.id.TextViewTimeToNextSholat);
+        SetPrayTime();
 
         SetUpTimer();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -86,18 +92,256 @@ public class MainActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    private void SetPrayTime() {
+        try {
+            double latitude;
+            double longitude;
+
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location myLocation = locationManager.getLastKnownLocation(provider);
+
+            if (myLocation != null) {
+                latitude = myLocation.getLatitude();
+                longitude = myLocation.getLongitude();
+            } else {
+                latitude = -6.1753871;
+                longitude = 106.8249641;
+            }
+
+            double timezone = (Calendar.getInstance().getTimeZone()
+                    .getOffset(Calendar.getInstance().getTimeInMillis()))
+                    / (1000 * 60 * 60);
+
+            PrayTime prayers = new PrayTime();
+
+            prayers.setTimeFormat(prayers.Time24);
+            prayers.setCalcMethod(prayers.Makkah);
+            prayers.setAsrJuristic(prayers.Shafii);
+            prayers.setAdjustHighLats(prayers.AngleBased);
+            int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
+            prayers.tune(offsets);
+
+            Calendar cal = Calendar.getInstance();
+
+            Calendar calNow = (Calendar)cal.clone();
+
+            ArrayList prayerTimes = prayers.getPrayerTimes(cal, latitude,
+                    longitude, timezone);
+            ArrayList prayerNames = prayers.getTimeNames();
+
+            Calendar waktuIsya = (Calendar) cal.clone();
+            waktuIsya.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), Integer.parseInt(prayerTimes.get(6).toString().split(":")[0]), Integer.parseInt(prayerTimes.get(6).toString().split(":")[1]));
+
+            if (cal.compareTo(waktuIsya) > 0) {
+                // Bandingkan dengan waktu subuh besok.
+                prayers = new PrayTime();
+
+                prayers.setTimeFormat(prayers.Time24);
+                prayers.setCalcMethod(prayers.Makkah);
+                prayers.setAsrJuristic(prayers.Shafii);
+                prayers.setAdjustHighLats(prayers.AngleBased);
+                prayers.tune(offsets);
+
+                cal = Calendar.getInstance();
+                cal.add(Calendar.DAY_OF_YEAR, 1);
+
+                prayerTimes = prayers.getPrayerTimes(cal, latitude,
+                        longitude, timezone);
+                prayerNames = prayers.getTimeNames();
+
+                textViewCurrentTime.setText(prayerTimes.get(0).toString());
+                textViewNextSholat.setText("Subuh");
+
+                Calendar waktuSubuh = (Calendar) cal.clone();
+                waktuSubuh.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), Integer.parseInt(prayerTimes.get(0).toString().split(":")[0]), Integer.parseInt(prayerTimes.get(0).toString().split(":")[1]));
+
+                long deltaTime = waktuSubuh.getTimeInMillis() - calNow.getTimeInMillis();
+                long timeToNextSholat = deltaTime;
+
+                long days = TimeUnit.MILLISECONDS
+                        .toDays(timeToNextSholat);
+                timeToNextSholat -= TimeUnit.DAYS.toMillis(days);
+
+                long hours = TimeUnit.MILLISECONDS
+                        .toHours(timeToNextSholat);
+                timeToNextSholat -= TimeUnit.HOURS.toMillis(hours);
+
+                long minutes = TimeUnit.MILLISECONDS
+                        .toMinutes(timeToNextSholat);
+                timeToNextSholat -= TimeUnit.MINUTES.toMillis(minutes);
+
+                long seconds = TimeUnit.MILLISECONDS
+                        .toSeconds(timeToNextSholat);
+
+                textViewTimeToNextSholat.setText(hours + "j " + minutes + "m");
+            }
+            else
+            {
+                Calendar waktuSubuh = (Calendar) cal.clone();
+                waktuSubuh.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), Integer.parseInt(prayerTimes.get(0).toString().split(":")[0]), Integer.parseInt(prayerTimes.get(0).toString().split(":")[1]));
+
+                if (cal.compareTo(waktuSubuh) <= 0) {
+                    textViewCurrentTime.setText(prayerTimes.get(0).toString());
+                    textViewNextSholat.setText("Subuh");
+
+                    long deltaTime = waktuSubuh.getTimeInMillis() - calNow.getTimeInMillis();
+                    long timeToNextSholat = deltaTime;
+
+                    long days = TimeUnit.MILLISECONDS
+                            .toDays(timeToNextSholat);
+                    timeToNextSholat -= TimeUnit.DAYS.toMillis(days);
+
+                    long hours = TimeUnit.MILLISECONDS
+                            .toHours(timeToNextSholat);
+                    timeToNextSholat -= TimeUnit.HOURS.toMillis(hours);
+
+                    long minutes = TimeUnit.MILLISECONDS
+                            .toMinutes(timeToNextSholat);
+                    timeToNextSholat -= TimeUnit.MINUTES.toMillis(minutes);
+
+                    long seconds = TimeUnit.MILLISECONDS
+                            .toSeconds(timeToNextSholat);
+
+                    textViewTimeToNextSholat.setText(hours + "j " + minutes + "m");
+                }
+                else
+                {
+                    Calendar waktuZuhur = (Calendar) cal.clone();
+                    waktuZuhur.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), Integer.parseInt(prayerTimes.get(2).toString().split(":")[0]), Integer.parseInt(prayerTimes.get(2).toString().split(":")[1]));
+
+                    if (cal.compareTo(waktuZuhur) <= 0) {
+                        textViewCurrentTime.setText(prayerTimes.get(2).toString());
+                        textViewNextSholat.setText("Zuhur");
+
+                        long deltaTime = waktuZuhur.getTimeInMillis() - calNow.getTimeInMillis();
+                        long timeToNextSholat = deltaTime;
+
+                        long days = TimeUnit.MILLISECONDS
+                                .toDays(timeToNextSholat);
+                        timeToNextSholat -= TimeUnit.DAYS.toMillis(days);
+
+                        long hours = TimeUnit.MILLISECONDS
+                                .toHours(timeToNextSholat);
+                        timeToNextSholat -= TimeUnit.HOURS.toMillis(hours);
+
+                        long minutes = TimeUnit.MILLISECONDS
+                                .toMinutes(timeToNextSholat);
+                        timeToNextSholat -= TimeUnit.MINUTES.toMillis(minutes);
+
+                        long seconds = TimeUnit.MILLISECONDS
+                                .toSeconds(timeToNextSholat);
+
+                        textViewTimeToNextSholat.setText(hours + "j " + minutes + "m");
+                    }
+                    else
+                    {
+                        Calendar waktuAshar = (Calendar) cal.clone();
+                        waktuAshar.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), Integer.parseInt(prayerTimes.get(3).toString().split(":")[0]), Integer.parseInt(prayerTimes.get(3).toString().split(":")[1]));
+
+                        if (cal.compareTo(waktuAshar) <= 0) {
+                            textViewCurrentTime.setText(prayerTimes.get(3).toString());
+                            textViewNextSholat.setText("Ashar");
+
+                            long deltaTime = waktuAshar.getTimeInMillis() - calNow.getTimeInMillis();
+                            long timeToNextSholat = deltaTime;
+
+                            long days = TimeUnit.MILLISECONDS
+                                    .toDays(timeToNextSholat);
+                            timeToNextSholat -= TimeUnit.DAYS.toMillis(days);
+
+                            long hours = TimeUnit.MILLISECONDS
+                                    .toHours(timeToNextSholat);
+                            timeToNextSholat -= TimeUnit.HOURS.toMillis(hours);
+
+                            long minutes = TimeUnit.MILLISECONDS
+                                    .toMinutes(timeToNextSholat);
+                            timeToNextSholat -= TimeUnit.MINUTES.toMillis(minutes);
+
+                            long seconds = TimeUnit.MILLISECONDS
+                                    .toSeconds(timeToNextSholat);
+
+                            textViewTimeToNextSholat.setText(hours + "j " + minutes + "m");
+                        }
+                        else
+                        {
+                            Calendar waktuMaghrib = (Calendar) cal.clone();
+                            waktuMaghrib.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), Integer.parseInt(prayerTimes.get(5).toString().split(":")[0]), Integer.parseInt(prayerTimes.get(5).toString().split(":")[1]));
+
+                            if (cal.compareTo(waktuMaghrib) <= 0) {
+                                textViewCurrentTime.setText(prayerTimes.get(5).toString());
+                                textViewNextSholat.setText("Maghrib");
+
+                                long deltaTime = waktuMaghrib.getTimeInMillis() - calNow.getTimeInMillis();
+                                long timeToNextSholat = deltaTime;
+
+                                long days = TimeUnit.MILLISECONDS
+                                        .toDays(timeToNextSholat);
+                                timeToNextSholat -= TimeUnit.DAYS.toMillis(days);
+
+                                long hours = TimeUnit.MILLISECONDS
+                                        .toHours(timeToNextSholat);
+                                timeToNextSholat -= TimeUnit.HOURS.toMillis(hours);
+
+                                long minutes = TimeUnit.MILLISECONDS
+                                        .toMinutes(timeToNextSholat);
+                                timeToNextSholat -= TimeUnit.MINUTES.toMillis(minutes);
+
+                                long seconds = TimeUnit.MILLISECONDS
+                                        .toSeconds(timeToNextSholat);
+
+                                textViewTimeToNextSholat.setText(hours + "j " + minutes + "m");
+                            }
+                            else
+                            {
+                                if (cal.compareTo(waktuIsya) <= 0) {
+                                    textViewCurrentTime.setText(prayerTimes.get(6).toString());
+                                    textViewNextSholat.setText("Isya");
+
+                                    long deltaTime = waktuIsya.getTimeInMillis() - calNow.getTimeInMillis();
+                                    long timeToNextSholat = deltaTime;
+
+                                    long days = TimeUnit.MILLISECONDS
+                                            .toDays(timeToNextSholat);
+                                    timeToNextSholat -= TimeUnit.DAYS.toMillis(days);
+
+                                    long hours = TimeUnit.MILLISECONDS
+                                            .toHours(timeToNextSholat);
+                                    timeToNextSholat -= TimeUnit.HOURS.toMillis(hours);
+
+                                    long minutes = TimeUnit.MILLISECONDS
+                                            .toMinutes(timeToNextSholat);
+                                    timeToNextSholat -= TimeUnit.MINUTES.toMillis(minutes);
+
+                                    long seconds = TimeUnit.MILLISECONDS
+                                            .toSeconds(timeToNextSholat);
+
+                                    textViewTimeToNextSholat.setText(hours + "j " + minutes + "m");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void SetUpTimer() {
 
         final Handler mHandler = new Handler();
         final Runnable mUpdateResults = new Runnable() {
             public void run() {
-                SetCurrentLocalTime();
                 SetCurrentLocalDate();
+                SetPrayTime();
             }
         };
 
-        int delay = 1000;
-        int period = 1000;
+        int delay = 0;
+        int period = 60000;
 
         Timer timer = new Timer();
 
@@ -117,16 +361,7 @@ public class MainActivity extends AppCompatActivity {
         String TanggalMasehi = dateFormatCurrentDate.format(calendar.getTime());
 
         String TanggalHijriah = DateHijri.getIslamicDate();
-        textViewCurrentDate.setText(TanggalMasehi + " / " +TanggalHijriah);
-
-    }
-
-    private void SetCurrentLocalTime() {
-
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
-        Date currentLocalTime = cal.getTime();
-        textViewCurrentTime.setText(dateFormatCurrentTime.format(currentLocalTime));
-
+        textViewCurrentDate.setText(TanggalMasehi + " / " + TanggalHijriah);
     }
 
     private void SetUpCurrentCity() {
@@ -152,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
             if (addresses.size() > 0) {
-                textViewLokasi.setText(addresses.get(0).getAdminArea());
+                textViewLokasi.setText(addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName());
             }
         } catch (Exception e) {
             e.printStackTrace();
