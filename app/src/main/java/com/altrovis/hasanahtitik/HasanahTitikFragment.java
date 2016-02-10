@@ -58,7 +58,8 @@ public class HasanahTitikFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), JuzAmmaListActivity.class);
                     startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 6){
-
+                    Intent intent = new Intent(getActivity(), JadwalSholatActivity.class);
+                    startActivity(intent);
                 }
 
             }

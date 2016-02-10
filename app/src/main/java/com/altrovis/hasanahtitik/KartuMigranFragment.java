@@ -48,7 +48,8 @@ public class KartuMigranFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), DoaHarianListActivity.class);
                     startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 2) {
-
+                    Intent intent = new Intent(getActivity(), JadwalSholatActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 3) {
 
                 } else if (listOfMenu.get(position).getID() == 4) {
