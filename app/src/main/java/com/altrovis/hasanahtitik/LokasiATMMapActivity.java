@@ -143,7 +143,7 @@ public class LokasiATMMapActivity extends AppCompatActivity {
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         GlobalVariable.SelectedCoordinate = koordinatMyLocation;
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(koordinatMyLocation).zoom(12).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(koordinatMyLocation).zoom(16).build();
         googleMapATM.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         ImageButton buttonListATM = (ImageButton)findViewById(R.id.ImageButtonListATM);
@@ -166,7 +166,7 @@ public class LokasiATMMapActivity extends AppCompatActivity {
     private void SetZoomLokasiATM(){
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(GlobalVariable.SelectedCoordinate)
-                .zoom(12).build();
+                .zoom(16).build();
         googleMapATM.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 

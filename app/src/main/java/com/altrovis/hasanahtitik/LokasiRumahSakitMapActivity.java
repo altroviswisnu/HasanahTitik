@@ -147,7 +147,7 @@ public class LokasiRumahSakitMapActivity extends AppCompatActivity {
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         GlobalVariable.SelectedCoordinate = koordinatMyLocation;
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(koordinatMyLocation).zoom(12).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(koordinatMyLocation).zoom(16).build();
         googleMapRumahsakit.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         ImageButton buttonListRumahSakit = (ImageButton)findViewById(R.id.ImageButtonListRumahSakit);
@@ -170,7 +170,7 @@ public class LokasiRumahSakitMapActivity extends AppCompatActivity {
     private void SetZoomLokasiRumahSakit(){
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(GlobalVariable.SelectedCoordinate)
-                .zoom(12).build();
+                .zoom(16).build();
         googleMapRumahsakit.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 

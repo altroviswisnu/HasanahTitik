@@ -60,8 +60,6 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
     private Location QiblaLocation;
     private Location MyLocation;
 
-    private int count;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +150,6 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
         orientation = new float[3];
         currentDegree = 0f;
         qiblaDegree = 0f;
-        count = 0;
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -216,8 +213,7 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
             directionQibla = 360 + directionQibla;
             directionQibla = directionQibla % 360;
 
-            count++;
-            if(count == 5 && qiblaDegree == 0){
+            if(qiblaDegree == 0){
                 qiblaDegree = directionQibla - azimuthInDegress;
                 qiblaDegree = qiblaDegree % 360;
             }
