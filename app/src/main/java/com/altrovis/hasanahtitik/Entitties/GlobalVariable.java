@@ -24,6 +24,7 @@ public class GlobalVariable {
     //public static String UrlJadwalBus = "http://poc.raufan.com/BNIMobileService/GetJadwalBus";
 
     public static String UrlKartuMigran = "http://poc.raufan.com/fiturkartu/getFiturKartuMobile";
+    public static String UrlHargaEmas = "http://poc.raufan.com/hargaemas/getContentHargaEmasMobile";
     public static String UrlJadwalBus = "http://poc.raufan.com/jadwalbus/getContentJadwalBus/1";
 
 }
