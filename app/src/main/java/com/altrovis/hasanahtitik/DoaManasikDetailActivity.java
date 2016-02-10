@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +21,14 @@ import android.widget.ImageView;
 import com.altrovis.hasanahtitik.Business.GlobalFunction;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 
+import java.io.IOException;
+
 public class DoaManasikDetailActivity extends AppCompatActivity {
 
     WebView webViewDoaManasik;
     private final int REFRESH_TIME_OUT = 1000;
     Context context;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,17 @@ public class DoaManasikDetailActivity extends AppCompatActivity {
 
                 webViewDoaManasik.loadUrl("about:blank");
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (!url.contains(".mp3")) {
+                    webViewDoaManasik.loadUrl(url);
+                    Log.e("Test", "Masuk");
+                } else {
+                    playAudio(url);
+                }
+                return true;
+            }
         });
 
         webViewDoaManasik.setBackgroundColor(0x00000000);
@@ -111,6 +127,36 @@ public class DoaManasikDetailActivity extends AppCompatActivity {
                     });
             AlertDialog alert = builder.create();
             alert.show();
+        }
+
+        mediaPlayer = new MediaPlayer();
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(mediaPlayer != null && mediaPlayer.isPlaying())
+        {
+            mediaPlayer.stop();
+        }
+    }
+
+    public void playAudio(String url)
+    {
+        try {
+            if(mediaPlayer != null && mediaPlayer.isPlaying())
+            {
+                mediaPlayer.stop();
+            }
+
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
