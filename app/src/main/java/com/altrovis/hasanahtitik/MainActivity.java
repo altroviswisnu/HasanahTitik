@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         String TanggalMasehi = dateFormatCurrentDate.format(calendar.getTime());
 
         String TanggalHijriah = DateHijri.getIslamicDate();
-        textViewCurrentDate.setText(TanggalMasehi + "/" +TanggalHijriah);
+        textViewCurrentDate.setText(TanggalMasehi + " / " +TanggalHijriah);
 
     }
 

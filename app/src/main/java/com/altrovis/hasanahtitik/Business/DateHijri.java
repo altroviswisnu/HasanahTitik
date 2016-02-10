@@ -107,9 +107,9 @@ public class DateHijri {
     public static String getIslamicDate() {
         String[] wdNames = { "Ahad", "Ithnin", "Thulatha", "Arbaa", "Khams",
                 "Jumuah", "Sabt" };
-        String[] iMonthNames = { "Muharram", "Safar", "Rabi'ul Awwal",
-                "Rabi'ul Akhir", "Jumadal Ula", "Jumadal Akhira", "Rajab",
-                "Sha'ban", "Ramadan", "Shawwal", "Dhul Qa'ada", "Dhul Hijja" };
+        String[] iMonthNames = { "Muharram", "Safar", "Rabiul Awal",
+                "Rabiul Akhir", "Jumadil Awal", "Jumadil Akhir", "Rajab",
+                "Sya'ban", "Ramadhan", "Syawal", "Dzulkaidah", "Dzulhijjah" };
         // This Value is used to give the correct day +- 1 day
         boolean dayTest = true;
         double[] iDate = kuwaiticalendar(dayTest);

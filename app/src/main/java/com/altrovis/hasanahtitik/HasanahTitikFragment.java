@@ -49,7 +49,8 @@ public class HasanahTitikFragment extends Fragment {
                 } else if (listOfMenu.get(position).getID() == 2){
 
                 } else if (listOfMenu.get(position).getID() == 3){
-
+                    Intent intent = new Intent(getActivity(), HargaEmasActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 4){
                     Intent intent = new Intent(getActivity(), LokasiATMMapActivity.class);
                     startActivity(intent);

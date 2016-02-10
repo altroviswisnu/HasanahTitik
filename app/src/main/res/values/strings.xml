@@ -19,4 +19,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_hasanah_kalkulator">HasanahKalkulator</string>
 
+    <string-array name="custom_weekdays">
+        <item>M</item>
+        <item>S</item>
+        <item>S</item>
+        <item>R</item>
+        <item>K</item>
+        <item>J</item>
+        <item>S</item>
+    </string-array>
+
 </resources>
