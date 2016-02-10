@@ -1,7 +1,5 @@
 package com.altrovis.hasanahtitik;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -13,6 +11,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
@@ -20,7 +21,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ArahKiblatActivity extends Activity implements SensorEventListener {
+public class ArahKiblatActivity extends AppCompatActivity implements SensorEventListener {
 
     private ImageView mPointer;
     private SensorManager mSensorManager;
@@ -42,11 +43,28 @@ public class ArahKiblatActivity extends Activity implements SensorEventListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arah_kiblat);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Arah Kiblat");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Arah Kiblat");
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+                    | android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView imageView = new ImageView(actionBar.getThemedContext());
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setImageResource(R.drawable.logo);
+            android.support.v7.app.ActionBar.LayoutParams layoutParams = new android.support.v7.app.ActionBar.LayoutParams(
+                    android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT,
+                    android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
+                    | Gravity.CENTER_VERTICAL);
+            layoutParams.rightMargin = 10;
+            layoutParams.width = 120;
+            layoutParams.height = 80;
+            imageView.setLayoutParams(layoutParams);
+            actionBar.setCustomView(imageView);
+        }
+
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
