@@ -137,7 +137,7 @@ public class JadwalSholatActivity extends AppCompatActivity implements OnDateSel
             PrayTime prayers = new PrayTime();
 
             prayers.setTimeFormat(prayers.Time24);
-            prayers.setCalcMethod(prayers.Makkah);
+            prayers.setCalcMethod(prayers.MWL);
             prayers.setAsrJuristic(prayers.Shafii);
             prayers.setAdjustHighLats(prayers.AngleBased);
             int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
@@ -192,7 +192,7 @@ public class JadwalSholatActivity extends AppCompatActivity implements OnDateSel
             PrayTime prayers = new PrayTime();
 
             prayers.setTimeFormat(prayers.Time24);
-            prayers.setCalcMethod(prayers.Makkah);
+            prayers.setCalcMethod(prayers.MWL);
             prayers.setAsrJuristic(prayers.Shafii);
             prayers.setAdjustHighLats(prayers.AngleBased);
             int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr, Sunrise, Dhuhr, Asr, Sunset, Maghrib, Isha}

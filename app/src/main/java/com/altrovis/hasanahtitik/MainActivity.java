@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             PrayTime prayers = new PrayTime();
 
             prayers.setTimeFormat(prayers.Time24);
-            prayers.setCalcMethod(prayers.Makkah);
+            prayers.setCalcMethod(prayers.MWL);
             prayers.setAsrJuristic(prayers.Shafii);
             prayers.setAdjustHighLats(prayers.AngleBased);
             int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 prayers = new PrayTime();
 
                 prayers.setTimeFormat(prayers.Time24);
-                prayers.setCalcMethod(prayers.Makkah);
+                prayers.setCalcMethod(prayers.MWL);
                 prayers.setAsrJuristic(prayers.Shafii);
                 prayers.setAdjustHighLats(prayers.AngleBased);
                 prayers.tune(offsets);
