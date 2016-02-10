@@ -40,7 +40,7 @@ public class LokasiRumahSakitListActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("List Rumah Sakit");
+            actionBar.setTitle("Daftar Rumah Sakit");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(false);
 

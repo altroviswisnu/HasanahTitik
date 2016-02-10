@@ -36,7 +36,7 @@ public class DoaHarianListActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Doa Sehari-hari");
+            actionBar.setTitle("Doa Sehari-Hari");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(false);
 

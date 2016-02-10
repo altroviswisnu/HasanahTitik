@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBlQPg1zHvDISL91CiyCW6K98RXeKQ7Ntc" />
+            android:value="@string/google_maps_key" />
         <activity android:name=".SplashScreenActivity"
             android:theme="@style/AppThemeNoTitleBar">
             <intent-filter>
