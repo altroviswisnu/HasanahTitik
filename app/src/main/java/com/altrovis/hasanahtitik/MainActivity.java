@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HajiUmrohFragment(), "Haji & Umroh");
         adapter.addFragment(new KartuMigranFragment(), "Kartu Migran");
-        adapter.addFragment(new HasanahTitikkFragment(), "Hasanah Titik");
+        adapter.addFragment(new HasanahTitikFragment(), "Hasanah Titik");
         viewPager.setAdapter(adapter);
 
     }
