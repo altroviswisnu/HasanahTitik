@@ -158,6 +158,5 @@ public class FiturKartuMigranHasanahActivity extends AppCompatActivity {
         @Override
         public void onReceivedTitle(WebView view, String title) {
         }
-
     }
 }
