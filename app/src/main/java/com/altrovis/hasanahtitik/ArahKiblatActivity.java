@@ -2,6 +2,7 @@ package com.altrovis.hasanahtitik;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -23,7 +24,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,17 +43,24 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
 
     private float[] rotation;
     private float[] orientation;
+
     private float currentDegree;
+    private float qiblaDegree;
 
     private TextView textViewMyLatitudeLongitude;
     private TextView textViewMyCurrentCity;
     private TextView textViewMyCurrentCountry;
+    private TextView textViewDegree;
 
     private ImageView imageViewKompasBase;
     private ImageView imageViewKompasNorth;
     private ImageView imageViewKompasQibla;
 
-    private LatLng QiblaCoordinate;
+    private GeomagneticField geoFieldUser;
+    private Location QiblaLocation;
+    private Location MyLocation;
+
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +97,7 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
         imageViewKompasBase = (ImageView) findViewById(R.id.ImageViewKompasBase);
         imageViewKompasNorth = (ImageView) findViewById(R.id.ImageViewKompasNorth);
         imageViewKompasQibla = (ImageView) findViewById(R.id.ImageViewKompasQibla);
+        textViewDegree = (TextView) findViewById(R.id.TextViewDegree);
         SetUpCompass();
 
     }
@@ -109,23 +118,25 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, true);
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        MyLocation = locationManager.getLastKnownLocation(provider);
 
-        if (myLocation != null) {
-            textViewMyLatitudeLongitude.setText(myLocation.getLatitude() + " , " + myLocation.getLongitude());
+        if (MyLocation != null) {
+            textViewMyLatitudeLongitude.setText(MyLocation.getLatitude() + ", " + MyLocation.getLongitude());
 
             Geocoder gcd = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = null;
             try {
-                addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
+                addresses = gcd.getFromLocation(MyLocation.getLatitude(), MyLocation.getLongitude(), 1);
                 if (addresses.size() > 0) {
-                    textViewMyCurrentCity.setText(addresses.get(0).getAdminArea().toUpperCase());
+                    textViewMyCurrentCity.setText(addresses.get(0).getLocality().toUpperCase());
                     textViewMyCurrentCountry.setText(addresses.get(0).getCountryName().toUpperCase());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            geoFieldUser = new GeomagneticField((float) MyLocation.getLatitude(), (float) MyLocation.getLongitude(),
+                    (float)MyLocation.getAltitude(), System.currentTimeMillis());
         }
     }
 
@@ -140,10 +151,16 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
         rotation = new float[9];
         orientation = new float[3];
         currentDegree = 0f;
+        qiblaDegree = 0f;
+        count = 0;
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        QiblaLocation = new Location("reverseGeocoded");
+        QiblaLocation.setLatitude(GlobalVariable.QiblaLatitude / 1e6);
+        QiblaLocation.setLongitude(GlobalVariable.QiblaLongitude / 1e6);
 
     }
 
@@ -177,17 +194,44 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
 
             SensorManager.getRotationMatrix(rotation, null, lastAccelerometer, lastMagnetic);
             SensorManager.getOrientation(rotation, orientation);
+
             float azimuthInRadians = orientation[0];
             float azimuthInDegress = (float)(Math.toDegrees(azimuthInRadians)+360)%360;
-            RotateAnimation rotateAnimation = new RotateAnimation(currentDegree, -azimuthInDegress,
+
+            RotateAnimation rotateAnimationNorth = new RotateAnimation(currentDegree, -azimuthInDegress,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
-            rotateAnimation.setDuration(250);
-            rotateAnimation.setFillAfter(true);
+            rotateAnimationNorth.setDuration(1000);
+            rotateAnimationNorth.setFillAfter(true);
 
-            imageViewKompasBase.startAnimation(rotateAnimation);
-            imageViewKompasNorth.startAnimation(rotateAnimation);
+            imageViewKompasBase.startAnimation(rotateAnimationNorth);
+            imageViewKompasNorth.startAnimation(rotateAnimationNorth);
+
+            float azimuthQibla = lastMagnetic[0];
+            azimuthQibla += geoFieldUser.getDeclination();
+            azimuthQibla = azimuthQibla % 360;
+
+            float directionQibla = azimuthQibla + MyLocation.bearingTo(QiblaLocation);
+            directionQibla = 360 + directionQibla;
+            directionQibla = directionQibla % 360;
+
+            count++;
+            if(count == 5 && qiblaDegree == 0){
+                qiblaDegree = directionQibla - azimuthInDegress;
+                qiblaDegree = qiblaDegree % 360;
+            }
+
+            RotateAnimation rotateAnimationQibla = new RotateAnimation(currentDegree - qiblaDegree, currentDegree,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+
+            rotateAnimationQibla.setDuration(1000);
+            rotateAnimationQibla.setFillAfter(true);
+
+            imageViewKompasQibla.startAnimation(rotateAnimationQibla);
+            textViewDegree.setText(directionQibla + "");
+
             currentDegree = -azimuthInDegress;
         }
     }
