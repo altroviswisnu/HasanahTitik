@@ -1,52 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/bggrad"
+tools:context="com.altrovis.hasanahtitik.HargaEmasActivity">
+
+<WebView
+    android:id="@+id/WebViewHargaEmas"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.altrovis.hasanahtitik.HargaEmasActivity">
+    android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@+id/TextViewTanggalHariIni"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginBottom="15dp"/>
+</RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/TextViewJudulJenisEmas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Jenis Emas"
-            android:layout_marginLeft="5dp"/>
-        <LinearLayout
-            android:id="@+id/LinearLayoutJudulHarga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
-            <TextView
-                android:id="@+id/TextViewJudulHargaJual"
-                android:layout_width="100dp"
-                android:text="Harga Jual"
-                android:gravity="center"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/TextViewJudulHargaBeli"
-                android:layout_width="70dp"
-                android:text="Harga Beli"
-                android:layout_marginRight="5dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/ListViewHargaEmas"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>

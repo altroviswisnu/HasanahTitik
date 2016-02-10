@@ -12,6 +12,7 @@ public class HargaEmas {
     private double HargaJual;
     private double HargaBeli;
     private Date Tanggal;
+    private String Url;
 
     public int getID() {
         return ID;
@@ -51,5 +52,13 @@ public class HargaEmas {
 
     public void setTanggal(Date tanggal) {
         Tanggal = tanggal;
+    }
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
     }
 }
