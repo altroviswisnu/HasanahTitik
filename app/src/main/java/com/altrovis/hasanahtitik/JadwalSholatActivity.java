@@ -7,6 +7,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -16,11 +18,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.altrovis.hasanahtitik.Business.DateHijri;
 import com.altrovis.hasanahtitik.Business.JadwalSholatAdapter;
 import com.altrovis.hasanahtitik.Business.PrayTime;
 import com.altrovis.hasanahtitik.Entitties.JadwalSholat;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,7 +39,7 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class JadwalSholatActivity extends AppCompatActivity {
+public class JadwalSholatActivity extends AppCompatActivity implements OnDateSelectedListener {
 
 
     TextView textViewWaktuSubuh;
@@ -40,6 +47,7 @@ public class JadwalSholatActivity extends AppCompatActivity {
     TextView textViewWaktuAshar;
     TextView textViewWaktuMaghrib;
     TextView textViewWaktuIsya;
+    TextView textViewTanggalSekarang;
 
     MaterialCalendarView calendarViewWeek;
 
@@ -70,14 +78,17 @@ public class JadwalSholatActivity extends AppCompatActivity {
             actionBar.setCustomView(imageView);
         }
 
-        textViewWaktuSubuh = (TextView)findViewById(R.id.TextViewWaktuSubuh);
-        textViewWaktuZuhur = (TextView)findViewById(R.id.TextViewWaktuZuhur);
-        textViewWaktuAshar = (TextView)findViewById(R.id.TextViewWaktuAshar);
-        textViewWaktuMaghrib = (TextView)findViewById(R.id.TextViewWaktuMaghrib);
-        textViewWaktuIsya = (TextView)findViewById(R.id.TextViewWaktuIsya);
+        textViewWaktuSubuh = (TextView) findViewById(R.id.TextViewWaktuSubuh);
+        textViewWaktuZuhur = (TextView) findViewById(R.id.TextViewWaktuZuhur);
+        textViewWaktuAshar = (TextView) findViewById(R.id.TextViewWaktuAshar);
+        textViewWaktuMaghrib = (TextView) findViewById(R.id.TextViewWaktuMaghrib);
+        textViewWaktuIsya = (TextView) findViewById(R.id.TextViewWaktuIsya);
+        textViewTanggalSekarang = (TextView)findViewById(R.id.TextViewTanggalSekarang);
 
-        calendarViewWeek = (MaterialCalendarView)findViewById(R.id.CalendarViewWeek);
+        calendarViewWeek = (MaterialCalendarView) findViewById(R.id.CalendarViewWeek);
         calendarViewWeek.setTopbarVisible(false);
+
+        calendarViewWeek.setShowOtherDates(MaterialCalendarView.SHOW_ALL);
 
         calendarViewWeek.setFirstDayOfWeek(Calendar.SUNDAY);
 
@@ -86,15 +97,14 @@ public class JadwalSholatActivity extends AppCompatActivity {
 
         calendarViewWeek.setSelectedDate(calendar.getTime());
 
-        Calendar first = (Calendar) calendar.clone();
-        first.add(Calendar.DAY_OF_WEEK,
-                first.getFirstDayOfWeek() - first.get(Calendar.DAY_OF_WEEK));
+        calendarViewWeek.setCalendarDisplayMode(CalendarMode.WEEKS);
 
-        Calendar last = (Calendar) first.clone();
-        last.add(Calendar.DAY_OF_YEAR, 6);
+        calendarViewWeek.setCurrentDate(calendarViewWeek.getSelectedDate(), true);
 
-        calendarViewWeek.setMinimumDate(first.getTime());
-        calendarViewWeek.setMaximumDate(last.getTime());
+        SimpleDateFormat dateFormatCurrentDate = new SimpleDateFormat("d MMMM y", new Locale("id", "ID"));
+        String TanggalMasehi = dateFormatCurrentDate.format(calendar.getTime());
+        String TanggalHijriah = DateHijri.getIslamicDate();
+        textViewTanggalSekarang.setText(TanggalMasehi + " / " + TanggalHijriah);
 
         try {
             double latitude;
@@ -122,12 +132,11 @@ public class JadwalSholatActivity extends AppCompatActivity {
             prayers.setCalcMethod(prayers.Makkah);
             prayers.setAsrJuristic(prayers.Shafii);
             prayers.setAdjustHighLats(prayers.AngleBased);
-            int[] offsets = { 0, 0, 0, 0, 0, 0, 0 }; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
+            int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
             prayers.tune(offsets);
 
-            Date now = new Date();
             Calendar cal = Calendar.getInstance();
-            cal.setTime(now);
+            cal.setTime(calendarViewWeek.getCurrentDate().getDate());
 
             ArrayList prayerTimes = prayers.getPrayerTimes(cal, latitude,
                     longitude, timezone);
@@ -148,6 +157,55 @@ public class JadwalSholatActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         return true;
+    }
+
+    @Override
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date, boolean selected) {
+        try {
+            double latitude;
+            double longitude;
+
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location myLocation = locationManager.getLastKnownLocation(provider);
+
+            if (myLocation != null) {
+                latitude = myLocation.getLatitude();
+                longitude = myLocation.getLongitude();
+            } else {
+                latitude = -6.1753871;
+                longitude = 106.8249641;
+            }
+
+            double timezone = (Calendar.getInstance().getTimeZone()
+                    .getOffset(Calendar.getInstance().getTimeInMillis()))
+                    / (1000 * 60 * 60);
+            PrayTime prayers = new PrayTime();
+
+            prayers.setTimeFormat(prayers.Time24);
+            prayers.setCalcMethod(prayers.Makkah);
+            prayers.setAsrJuristic(prayers.Shafii);
+            prayers.setAdjustHighLats(prayers.AngleBased);
+            int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr, Sunrise, Dhuhr, Asr, Sunset, Maghrib, Isha}
+            prayers.tune(offsets);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(calendarViewWeek.getCurrentDate().getDate());
+
+            ArrayList prayerTimes = prayers.getPrayerTimes(cal, latitude,
+                    longitude, timezone);
+            ArrayList prayerNames = prayers.getTimeNames();
+
+            textViewWaktuSubuh.setText(prayerTimes.get(0).toString());
+            textViewWaktuZuhur.setText(prayerTimes.get(2).toString());
+            textViewWaktuAshar.setText(prayerTimes.get(3).toString());
+            textViewWaktuMaghrib.setText(prayerTimes.get(5).toString());
+            textViewWaktuIsya.setText(prayerTimes.get(6).toString());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

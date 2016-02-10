@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/bggrad"
     android:orientation="vertical"
     tools:context="com.altrovis.hasanahtitik.JadwalSholatActivity">
 
@@ -10,14 +11,39 @@
         android:id="@+id/CalendarViewWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:mcv_dateTextAppearance="@style/CustomDayTextAppearance"
         app:mcv_selectionColor="#f25822"
-        />
+        app:mcv_weekDayLabels="@array/custom_weekdays" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="@android:color/white" />
+
+    <TextView
+        android:id="@+id/TextViewTanggalSekarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@android:color/white" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#44000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bggrad"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -45,7 +71,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:background="#66000000" />
+            android:background="#44000000" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,7 +98,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:background="#66000000" />
+            android:background="#44000000" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -99,7 +125,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:background="#66000000" />
+            android:background="#44000000" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -126,7 +152,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:background="#66000000" />
+            android:background="#44000000" />
 
         <RelativeLayout
             android:layout_width="match_parent"
