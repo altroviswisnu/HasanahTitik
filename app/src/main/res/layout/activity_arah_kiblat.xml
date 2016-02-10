@@ -3,32 +3,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/bggrad"
     tools:context="com.altrovis.hasanahtitik.ArahKiblatActivity">
 
+    <TextView
+        android:id="@+id/TextViewMyCurrentCity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="JAKARTA"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/TextViewMyCurrentCountry"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextViewMyCurrentCity"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:text="INDONESIA"
+        android:layout_marginTop="5dp"/>
+
+
     <ImageView
-        android:id="@+id/imageViewKiblat"
+        android:id="@+id/ImageViewKompasBase"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/arahkiblat" />
+        android:src="@drawable/kompasbase" />
+
+    <ImageView
+        android:id="@+id/ImageViewKompasNorth"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/kompasnorth" />
+
+    <ImageView
+        android:id="@+id/ImageViewKompasQibla"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/kompaskabah" />
+
     <TextView
-        android:id="@+id/TextViewMyLatitude"
-        android:layout_width="fill_parent"
+        android:id="@+id/TextViewDegree"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageViewKiblat"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:textAlignment="center"
         android:textStyle="bold"
+        android:textSize="18dp"
+        android:text="236.1"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/TextViewGlobalLocation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ImageViewKompasBase"
+        android:textAlignment="center"
+        android:text="Lokasi Global Saya"
+        android:textSize="18dp"
         android:layout_marginTop="50dp"/>
 
     <TextView
-        android:id="@+id/TextViewMyLongitude"
+        android:id="@+id/TextViewMyLatitudeLongitude"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextViewMyLatitude"
+        android:layout_below="@+id/TextViewGlobalLocation"
         android:textAlignment="center"
         android:textStyle="bold"
+        android:textSize="18dp"
+        android:text="-6.264899 , 106.864537"
         android:layout_marginTop="5dp"/>
 
 </RelativeLayout>

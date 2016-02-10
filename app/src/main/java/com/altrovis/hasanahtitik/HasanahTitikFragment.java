@@ -16,8 +16,7 @@ import java.util.ArrayList;
 
 public class HasanahTitikFragment extends Fragment {
 
-    public HasanahTitikFragment() {
-    }
+    public HasanahTitikFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,5 +66,4 @@ public class HasanahTitikFragment extends Fragment {
 
         return view;
     }
-
 }

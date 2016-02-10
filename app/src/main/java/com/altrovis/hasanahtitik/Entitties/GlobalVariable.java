@@ -26,4 +26,7 @@ public class GlobalVariable {
     public static String UrlKartuMigran = "http://poc.raufan.com/fiturkartu/getFiturKartuMobile";
     public static String UrlJadwalBus = "http://poc.raufan.com/jadwalbus/getContentJadwalBus/1";
 
+    public static Double QiblaLatitude = 21.4225;
+    public static Double QiblaLongitude = 39.8261;
+
 }

@@ -6,7 +6,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -21,22 +23,36 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
+import java.util.Locale;
+
 public class ArahKiblatActivity extends AppCompatActivity implements SensorEventListener {
 
-    private ImageView mPointer;
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private Sensor mMagnetometer;
-    private float[] mLastAccelerometer = new float[3];
-    private float[] mLastMagnetometer = new float[3];
-    private boolean mLastAccelerometerSet = false;
-    private boolean mLastMagnetometerSet = false;
-    private float[] mR = new float[9];
-    private float[] mOrientation = new float[3];
-    private float mCurrentDegree = 0f;
+    private SensorManager sensorManager;
+    private Sensor accelerometerSensor;
+    private Sensor magneticSensor;
 
-    private TextView textViewMyLatitude;
-    private TextView textViewMyLongitude;
+    private float[] lastAccelerometer;
+    private float[] lastMagnetic;
+
+    private boolean lastAccelerometerSet;
+    private boolean lastMagneticSet;
+
+    private float[] rotation;
+    private float[] orientation;
+    private float currentDegree;
+
+    private TextView textViewMyLatitudeLongitude;
+    private TextView textViewMyCurrentCity;
+    private TextView textViewMyCurrentCountry;
+
+    private ImageView imageViewKompasBase;
+    private ImageView imageViewKompasNorth;
+    private ImageView imageViewKompasQibla;
+
+    private LatLng QiblaCoordinate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +81,19 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
             actionBar.setCustomView(imageView);
         }
 
+        textViewMyLatitudeLongitude = (TextView) findViewById(R.id.TextViewMyLatitudeLongitude);
+        textViewMyCurrentCity = (TextView) findViewById(R.id.TextViewMyCurrentCity);
+        textViewMyCurrentCountry = (TextView) findViewById(R.id.TextViewMyCurrentCountry);
+        SetUpMyLocation();
 
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        mPointer = (ImageView) findViewById(R.id.imageViewKiblat);
+        imageViewKompasBase = (ImageView) findViewById(R.id.ImageViewKompasBase);
+        imageViewKompasNorth = (ImageView) findViewById(R.id.ImageViewKompasNorth);
+        imageViewKompasQibla = (ImageView) findViewById(R.id.ImageViewKompasQibla);
+        SetUpCompass();
 
-        textViewMyLatitude = (TextView) findViewById(R.id.TextViewMyLatitude);
-        textViewMyLongitude = (TextView) findViewById(R.id.TextViewMyLongitude);
+    }
+
+    private void SetUpMyLocation(){
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -91,46 +112,83 @@ public class ArahKiblatActivity extends AppCompatActivity implements SensorEvent
         Location myLocation = locationManager.getLastKnownLocation(provider);
 
         if (myLocation != null) {
-            textViewMyLatitude.setText("Latitude = " + myLocation.getLatitude());
-            textViewMyLongitude.setText("Longitude = " + myLocation.getLongitude());
+            textViewMyLatitudeLongitude.setText(myLocation.getLatitude() + " , " + myLocation.getLongitude());
+
+            Geocoder gcd = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = null;
+            try {
+                addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
+                if (addresses.size() > 0) {
+                    textViewMyCurrentCity.setText(addresses.get(0).getAdminArea().toUpperCase());
+                    textViewMyCurrentCountry.setText(addresses.get(0).getCountryName().toUpperCase());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
+    }
+
+    private void SetUpCompass(){
+
+        lastAccelerometer = new float[3];
+        lastMagnetic = new float[3];
+
+        lastAccelerometerSet = false;
+        lastMagneticSet = false;
+
+        rotation = new float[9];
+        orientation = new float[3];
+        currentDegree = 0f;
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
     }
 
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
     protected void onPause() {
         super.onPause();
-        mSensorManager.unregisterListener(this, mAccelerometer);
-        mSensorManager.unregisterListener(this, mMagnetometer);
+        sensorManager.unregisterListener(this, magneticSensor);
+        sensorManager.unregisterListener(this, magneticSensor);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor == mAccelerometer) {
-            System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
-            mLastAccelerometerSet = true;
-        } else if (event.sensor == mMagnetometer) {
-            System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
-            mLastMagnetometerSet = true;
+
+        if (event.sensor == accelerometerSensor) {
+
+            System.arraycopy(event.values, 0, lastAccelerometer, 0, event.values.length);
+            lastAccelerometerSet = true;
+
+        } else if (event.sensor == magneticSensor) {
+
+            System.arraycopy(event.values, 0, lastMagnetic, 0, event.values.length);
+            lastMagneticSet = true;
+
         }
-        if (mLastAccelerometerSet && mLastMagnetometerSet) {
-            SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
-            SensorManager.getOrientation(mR, mOrientation);
-            float azimuthInRadians = mOrientation[0];
+        if (lastAccelerometerSet && lastMagneticSet) {
+
+            SensorManager.getRotationMatrix(rotation, null, lastAccelerometer, lastMagnetic);
+            SensorManager.getOrientation(rotation, orientation);
+            float azimuthInRadians = orientation[0];
             float azimuthInDegress = (float)(Math.toDegrees(azimuthInRadians)+360)%360;
-            RotateAnimation ra = new RotateAnimation(mCurrentDegree, -azimuthInDegress,
+            RotateAnimation rotateAnimation = new RotateAnimation(currentDegree, -azimuthInDegress,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
-            ra.setDuration(250);
-            ra.setFillAfter(true);
+            rotateAnimation.setDuration(250);
+            rotateAnimation.setFillAfter(true);
 
-            mPointer.startAnimation(ra);
-            mCurrentDegree = -azimuthInDegress;
+            imageViewKompasBase.startAnimation(rotateAnimation);
+            imageViewKompasNorth.startAnimation(rotateAnimation);
+            currentDegree = -azimuthInDegress;
         }
     }
 
