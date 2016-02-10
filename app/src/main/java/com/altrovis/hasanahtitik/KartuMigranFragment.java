@@ -52,7 +52,8 @@ public class KartuMigranFragment extends Fragment {
                 } else if (listOfMenu.get(position).getID() == 3) {
 
                 } else if (listOfMenu.get(position).getID() == 4) {
-
+                    Intent intent = new Intent(getActivity(), FiturKartuMigranHasanahActivity.class);
+                    startActivity(intent);
                 }
             }
         });

@@ -1,36 +1,58 @@
 package com.altrovis.hasanahtitik;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
-public class JadwalBusActivity extends Activity {
+import com.altrovis.hasanahtitik.Business.GlobalFunction;
+import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
+
+public class JadwalBusActivity extends AppCompatActivity {
 
     WebView webViewJadwalBus;
     private final int REFRESH_TIME_OUT = 1000;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal_bus);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Jadwal Bus");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Jadwal Bus");
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+                    | android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView imageView = new ImageView(actionBar.getThemedContext());
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setImageResource(R.drawable.logo);
+            android.support.v7.app.ActionBar.LayoutParams layoutParams = new android.support.v7.app.ActionBar.LayoutParams(
+                    android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT,
+                    android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
+                    | Gravity.CENTER_VERTICAL);
+            layoutParams.rightMargin = 10;
+            layoutParams.width = 120;
+            layoutParams.height = 80;
+            imageView.setLayoutParams(layoutParams);
+            actionBar.setCustomView(imageView);
+        }
+
+        context = JadwalBusActivity.this;
 
         webViewJadwalBus = (WebView) findViewById(R.id.WebViewJadwalBus);
 
@@ -58,13 +80,13 @@ public class JadwalBusActivity extends Activity {
 
         webViewJadwalBus.setBackgroundColor(0x00000000);
 
-        if(isConnected(this)) {
+        if(GlobalFunction.isOnline(context)) {
 
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
-                    webViewJadwalBus.loadUrl("http://siga.bkkbn.go.id/felisa/");
+                    webViewJadwalBus.loadUrl(GlobalVariable.UrlJadwalBus);
 
                     new Handler().postDelayed(new Runnable() {
 
@@ -110,13 +132,6 @@ public class JadwalBusActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public boolean isConnected(Activity activity) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager
-                .getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     private class MyWebViewClient extends WebChromeClient {

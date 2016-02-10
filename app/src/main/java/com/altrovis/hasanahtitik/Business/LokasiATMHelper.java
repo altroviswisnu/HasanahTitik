@@ -99,7 +99,7 @@ public class LokasiATMHelper {
         return count <= 0;
     }
 
-    public static void deleteAllRumahSakit(Context context) throws Exception {
+    public static void deleteAllATM(Context context) throws Exception {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         databaseHelper.openDataBase();
 

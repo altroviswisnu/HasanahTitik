@@ -50,11 +50,11 @@ public class LokasiRumahSakitHelper {
         }
 
         databaseHelper.close();
-        return getListOfRumahSakirFromDataBase(context);
+        return getListOfRumahSakitFromDataBase(context);
     }
 
 
-    public static ArrayList<LokasiRumahSakit> getListOfRumahSakirFromDataBase(Context context) throws Exception {
+    public static ArrayList<LokasiRumahSakit> getListOfRumahSakitFromDataBase(Context context) throws Exception {
         ArrayList<LokasiRumahSakit> listOfRumahSakit = new ArrayList<LokasiRumahSakit>();
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         databaseHelper.openDataBase();

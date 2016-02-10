@@ -16,8 +16,11 @@ public class GlobalVariable {
     public static String UrlLokasiATM = "http://poc.raufan.com/BNIMobileService/GetListOfATM";
     public static String UrlPromo = "http://poc.raufan.com/BNIMobileService/GetListOfPromo";
 
-    public static String UrlKartuMigran = "http://poc.raufan.com/BNIMobileService/GetFiturKartu";
-    public static String UrlJadwalBus = "http://poc.raufan.com/BNIMobileService/GetJadwalBus";
+    //public static String UrlKartuMigran = "http://poc.raufan.com/BNIMobileService/GetFiturKartu";
+    //public static String UrlJadwalBus = "http://poc.raufan.com/BNIMobileService/GetJadwalBus";
+
+    public static String UrlKartuMigran = "poc.raufan.com/fiturkartu/getFiturKartuMobile";
+    public static String UrlJadwalBus = "poc.raufan.com/jadwalbus/getContentJadwalBus/1";
 
     public static HasanahPromo SelectedPromo;
 

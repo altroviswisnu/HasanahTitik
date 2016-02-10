@@ -49,7 +49,7 @@ public class DoaManasikListActivity extends AppCompatActivity {
                     | Gravity.CENTER_VERTICAL);
             layoutParams.rightMargin = 10;
             layoutParams.width = 120;
-            layoutParams.height = 80;
+            layoutParams.height = 0;
             imageView.setLayoutParams(layoutParams);
             actionBar.setCustomView(imageView);
         }

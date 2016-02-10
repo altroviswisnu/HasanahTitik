@@ -1,12 +1,9 @@
 package com.altrovis.hasanahtitik;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -19,12 +16,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
+import com.altrovis.hasanahtitik.Business.GlobalFunction;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 
 public class DoaHarianDetailActivity extends AppCompatActivity {
 
     WebView webViewDoaHarian;
     private final int REFRESH_TIME_OUT = 1000;
+    Context context;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +52,7 @@ public class DoaHarianDetailActivity extends AppCompatActivity {
             actionBar.setCustomView(imageView);
         }
 
+        context = DoaHarianDetailActivity.this;
 
         webViewDoaHarian = (WebView) findViewById(R.id.WebViewDoaHarian);
 
@@ -80,7 +80,7 @@ public class DoaHarianDetailActivity extends AppCompatActivity {
 
         webViewDoaHarian.setBackgroundColor(0x00000000);
 
-        if(isConnected(this)) {
+        if(GlobalFunction.isOnline(context)) {
 
             new Handler().postDelayed(new Runnable() {
 
@@ -132,14 +132,6 @@ public class DoaHarianDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public boolean isConnected(Activity activity) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager
-                .getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     private class MyWebViewClient extends WebChromeClient {

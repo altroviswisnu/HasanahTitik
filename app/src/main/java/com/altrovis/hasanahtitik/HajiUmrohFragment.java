@@ -48,13 +48,15 @@ public class HajiUmrohFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), DoaManasikListActivity.class);
                     startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 2) {
-
+                    Intent intent = new Intent(getActivity(), LokasiRumahSakitMapActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 3) {
 
                 } else if (listOfMenu.get(position).getID() == 4) {
 
                 } else if (listOfMenu.get(position).getID() == 5) {
-
+                    Intent intent = new Intent(getActivity(), JadwalBusActivity.class);
+                    startActivity(intent);
                 }
             }
         });

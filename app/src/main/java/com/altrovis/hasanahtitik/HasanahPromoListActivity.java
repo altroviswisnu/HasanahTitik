@@ -1,55 +1,65 @@
 package com.altrovis.hasanahtitik;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.altrovis.hasanahtitik.Business.HasanahPromoAdapter;
+import com.altrovis.hasanahtitik.Business.HasanahPromoHelper;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.HasanahPromo;
 
 import java.util.ArrayList;
 
-public class HasanahPromoListActivity extends Activity {
+public class HasanahPromoListActivity extends AppCompatActivity {
 
     ListView listViewHasanahPromo;
     ArrayList<HasanahPromo> listofHasanahPromo;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hasanah_promo_list);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Hasanah Promo");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Hasanah Promo");
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+                    | android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView imageView = new ImageView(actionBar.getThemedContext());
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setImageResource(R.drawable.logo);
+            ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                    android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT,
+                    android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
+                    | Gravity.CENTER_VERTICAL);
+            layoutParams.rightMargin = 10;
+            layoutParams.width = 120;
+            layoutParams.height = 80;
+            imageView.setLayoutParams(layoutParams);
+            actionBar.setCustomView(imageView);
+        }
+
+        context = HasanahPromoListActivity.this;
+
 
         listViewHasanahPromo = (ListView) findViewById(R.id.ListViewHasanahPromo);
-        try {
-
-            listofHasanahPromo = new ArrayList<HasanahPromo>();
-            HasanahPromoAdapter adapter = new HasanahPromoAdapter(this, R.layout.list_view_harga_emas, listofHasanahPromo);
-            listViewHasanahPromo.setAdapter(adapter);
-
-            listViewHasanahPromo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    GlobalVariable.SelectedPromo = listofHasanahPromo.get(position);
-                    Intent intent = new Intent(HasanahPromoListActivity.this, DoaHarianDetailActivity.class);
-                    startActivity(intent);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new HasanahPromoAsyncTask().execute();
     }
 
     @Override
@@ -71,4 +81,55 @@ public class HasanahPromoListActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class HasanahPromoAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressDialog;
+
+        private HasanahPromoAsyncTask(){
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage("Silahkan Tunggu");
+            progressDialog.show();
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            if(!progressDialog.isShowing()){
+                progressDialog.show();
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                listofHasanahPromo = HasanahPromoHelper.getListOfHasanahPromo(GlobalVariable.UrlPromo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+            if(progressDialog.isShowing()){
+                progressDialog.dismiss();
+            }
+
+            HasanahPromoAdapter adapter = new HasanahPromoAdapter(context, R.layout.list_view_hasanah_promo, listofHasanahPromo);
+            listViewHasanahPromo.setAdapter(adapter);
+
+            listViewHasanahPromo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    GlobalVariable.SelectedPromo = listofHasanahPromo.get(position);
+                    Intent intent = new Intent(HasanahPromoListActivity.this, HasanahPromoDetailActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
+    }
+
 }
