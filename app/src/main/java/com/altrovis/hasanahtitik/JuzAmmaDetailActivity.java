@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +23,14 @@ import android.widget.ImageView;
 import com.altrovis.hasanahtitik.Business.GlobalFunction;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 
+import java.io.IOException;
+
 public class JuzAmmaDetailActivity extends AppCompatActivity {
 
     WebView webViewJuzAmma;
     private final int REFRESH_TIME_OUT = 1000;
     Context context;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +83,17 @@ public class JuzAmmaDetailActivity extends AppCompatActivity {
 
                 webViewJuzAmma.loadUrl("about:blank");
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (!url.contains(".mp3")) {
+                    webViewJuzAmma.loadUrl(url);
+                    Log.e("Test","Masuk");
+                } else {
+                    playAudio(url);
+                }
+                return true;
+            }
         });
 
         webViewJuzAmma.setBackgroundColor(0x00000000);
@@ -112,12 +130,42 @@ public class JuzAmmaDetailActivity extends AppCompatActivity {
             AlertDialog alert = builder.create();
             alert.show();
         }
+
+        mediaPlayer = new MediaPlayer();
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(mediaPlayer != null && mediaPlayer.isPlaying())
+        {
+            mediaPlayer.stop();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         return true;
+    }
+
+    public void playAudio(String url)
+    {
+        try {
+            if(mediaPlayer != null && mediaPlayer.isPlaying())
+            {
+                mediaPlayer.stop();
+            }
+
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
