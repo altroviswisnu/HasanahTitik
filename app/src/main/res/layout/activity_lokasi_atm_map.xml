@@ -13,11 +13,11 @@
 
     <ImageButton
         android:id="@+id/ImageButtonListATM"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@mipmap/button_kedutaan"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:background="@drawable/icon_list"
         android:layout_alignParentRight="true"
         android:layout_marginTop="7sp"
-        android:layout_marginRight="55sp"/>
+        android:layout_marginRight="58sp"/>
 
 </RelativeLayout>
