@@ -36,9 +36,6 @@
             android:label="@string/app_name"
             android:theme="@style/AppThemeNoTitleBar">
         </activity>
-        <activity android:name=".HajiUmrohActivity" />
-        <activity android:name=".MigranHasanahActivity" />
-        <activity android:name=".HasanahTitikActivity" />
         <activity android:name=".JadwalSholatActivity" />
         <activity android:name=".JadwalBusActivity" />
         <activity android:name=".LokasiRumahSakitMapActivity" />
