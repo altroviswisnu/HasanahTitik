@@ -53,7 +53,8 @@ public class HajiUmrohFragment extends Fragment {
                 } else if (listOfMenu.get(position).getID() == 3) {
 
                 } else if (listOfMenu.get(position).getID() == 4) {
-
+                    Intent intent = new Intent(getActivity(), JadwalSholatActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 5) {
                     Intent intent = new Intent(getActivity(), JadwalBusActivity.class);
                     startActivity(intent);
