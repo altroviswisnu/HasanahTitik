@@ -20,6 +20,7 @@ import com.altrovis.hasanahtitik.Business.LokasiRumahSakitAdapter;
 import com.altrovis.hasanahtitik.Business.LokasiRumahSakitHelper;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.LokasiRumahSakit;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class LokasiRumahSakitListActivity extends AppCompatActivity {
     ListView listViewLokasiRumahSakit;
     ArrayList<LokasiRumahSakit> listofRumahSakit;
     Context context;
+    AppCompatActivity activity;
     LokasiRumahSakitAdapter adapter;
     SwipeRefreshLayout refreshLayout;
     
@@ -59,6 +61,7 @@ public class LokasiRumahSakitListActivity extends AppCompatActivity {
         }
 
         context = LokasiRumahSakitListActivity.this;
+        activity = LokasiRumahSakitListActivity.this;
 
         listViewLokasiRumahSakit = (ListView) findViewById(R.id.ListViewLokasiRumahSakit);
         try {
@@ -73,10 +76,13 @@ public class LokasiRumahSakitListActivity extends AppCompatActivity {
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.SwipeRefreshLayoutRumahSakit);
         refreshLayout.setOnRefreshListener(new LokasiRumahSakitPullRefresh());
 
+
         listViewLokasiRumahSakit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                LokasiRumahSakit rumahSakit = listofRumahSakit.get(position);
+                GlobalVariable.SelectedCoordinate = new LatLng(rumahSakit.getLatitude(), rumahSakit.getLongitude());
+                activity.finish();
             }
         });
     }
@@ -155,6 +161,8 @@ public class LokasiRumahSakitListActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
+            refreshLayout.setRefreshing(false);
         }
     }
 }

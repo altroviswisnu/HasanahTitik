@@ -1,25 +1,37 @@
 package com.altrovis.hasanahtitik;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.altrovis.hasanahtitik.Business.GlobalFunction;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.HasanahPromo;
 
 public class HasanahPromoDetailActivity extends AppCompatActivity {
 
+    WebView webViewHasanahPromo;
+    private final int REFRESH_TIME_OUT = 1000;
+    Context context;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hasanah_promo_detail);
 
-        HasanahPromo hasanahPromo = GlobalVariable.SelectedPromo;
+        final HasanahPromo hasanahPromo = GlobalVariable.SelectedPromo;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -43,18 +55,67 @@ public class HasanahPromoDetailActivity extends AppCompatActivity {
             actionBar.setCustomView(imageView);
         }
 
+        context = HasanahPromoDetailActivity.this;
 
-        TextView textViewJudulPromo = (TextView) findViewById(R.id.TextViewJudulPromo);
-        TextView textViewTanggalPromoDibuat = (TextView) findViewById(R.id.TextViewTanggalPromoDibuat);
-        TextView textViewTanggalPromoMulai = (TextView) findViewById(R.id.TextViewTanggaPromoMulai);
-        TextView textViewTanggalPromoSelesai = (TextView) findViewById(R.id.TextViewTanggalPromoSelesai);
-        TextView textViewContentsPromo = (TextView) findViewById(R.id.TextViewContentsPromo);
+        webViewHasanahPromo = (WebView) findViewById(R.id.WebViewHasanahPromo);
 
-        textViewJudulPromo.setText(hasanahPromo.getNama());
-        textViewTanggalPromoDibuat.setText(hasanahPromo.getDateCreated());
-        textViewTanggalPromoMulai.setText(hasanahPromo.getDateStart());
-        textViewTanggalPromoSelesai.setText(hasanahPromo.getDateEnd());
-        textViewContentsPromo.setText(hasanahPromo.getContents());
+        webViewHasanahPromo.setWebChromeClient(new MyWebViewClient());
+        webViewHasanahPromo.getSettings().setJavaScriptEnabled(true);
+        webViewHasanahPromo.getSettings().setSupportMultipleWindows(true); // This forces ChromeClient enabled.
+
+        webViewHasanahPromo.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HasanahPromoDetailActivity.this);
+                builder.setMessage(description)
+                        .setTitle("Perhatian")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                webViewHasanahPromo.loadUrl("about:blank");
+            }
+        });
+
+        webViewHasanahPromo.setBackgroundColor(0x00000000);
+
+        if(GlobalFunction.isOnline(context)) {
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    webViewHasanahPromo.loadUrl(hasanahPromo.getUrlWebView());
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            webViewHasanahPromo.reload();
+                        }
+                    }, REFRESH_TIME_OUT);
+                }
+            }, REFRESH_TIME_OUT);
+        }
+        else
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Perangkat Anda tidak terhubung dengan internet.")
+                    .setTitle("Perhatian")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        
     }
 
     @Override
@@ -75,6 +136,32 @@ public class HasanahPromoDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class MyWebViewClient extends WebChromeClient {
+        ProgressDialog progress;
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            if(progress == null)
+            {
+                progress = ProgressDialog.show(HasanahPromoDetailActivity.this, "",
+                        "Sedang mengambil data...", true);
+            }
+            if (newProgress == 100) {
+                if(progress != null)
+                {
+                    progress.dismiss();
+                    progress = null;
+                }
+            }
+
+            super.onProgressChanged(view, newProgress);
+        }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+        }
+
     }
 
 }

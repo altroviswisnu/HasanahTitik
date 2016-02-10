@@ -1,5 +1,7 @@
 package com.altrovis.hasanahtitik.Entitties;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by Wisnu on 04/02/2016.
  */
@@ -8,6 +10,7 @@ public class GlobalVariable {
     public static String UrlWebView = "";
     public static String TitleActionBar = "";
     public static HasanahPromo SelectedPromo;
+    public static LatLng SelectedCoordinate;
 
     public static String UrlDoaHarian = "http://poc.raufan.com/BNIMobileService/GetListOfDoa";
     public static String UrlDoaManasik = "http://poc.raufan.com/BNIMobileService/GetListOfDoaManasik";

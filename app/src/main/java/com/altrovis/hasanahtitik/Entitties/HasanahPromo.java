@@ -7,10 +7,10 @@ public class HasanahPromo {
 
     private int ID;
     private String Nama;
-    private String Contents;
     private String DateCreated;
     private String DateStart;
     private String DateEnd;
+    private String UrlWebView;
 
     public int getID() {
         return ID;
@@ -26,14 +26,6 @@ public class HasanahPromo {
 
     public void setNama(String nama) {
         Nama = nama;
-    }
-
-    public String getContents() {
-        return Contents;
-    }
-
-    public void setContents(String contents) {
-        Contents = contents;
     }
 
     public String getDateCreated() {
@@ -58,5 +50,13 @@ public class HasanahPromo {
 
     public void setDateEnd(String dateEnd) {
         DateEnd = dateEnd;
+    }
+
+    public String getUrlWebView() {
+        return UrlWebView;
+    }
+
+    public void setUrlWebView(String urlWebView) {
+        UrlWebView = urlWebView;
     }
 }

@@ -36,6 +36,7 @@ public class LokasiATMMapActivity extends AppCompatActivity {
     private GoogleMap googleMapATM;
     ArrayList<LokasiATM> listOfATM;
     Context context;
+    static final int MAP_ATM_REQUEST = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,7 @@ public class LokasiATMMapActivity extends AppCompatActivity {
 
         googleMapATM.addMarker(new MarkerOptions().position(koordinatMyLocation)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        GlobalVariable.SelectedCoordinate = koordinatMyLocation;
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(koordinatMyLocation).zoom(12).build();
         googleMapATM.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -149,9 +151,23 @@ public class LokasiATMMapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LokasiATMMapActivity.this, LokasiATMListActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, MAP_ATM_REQUEST);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == MAP_ATM_REQUEST){
+            SetZoomLokasiATM();
+        }
+    }
+
+    private void SetZoomLokasiATM(){
+
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(GlobalVariable.SelectedCoordinate)
+                .zoom(12).build();
+        googleMapATM.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private class LokasiATMAsyncTask extends AsyncTask<Void, Void, Void> {

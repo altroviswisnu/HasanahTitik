@@ -37,6 +37,7 @@ public class LokasiRumahSakitMapActivity extends AppCompatActivity {
     private GoogleMap googleMapRumahsakit;
     ArrayList<LokasiRumahSakit> listOfRumahSakit;
     Context context;
+    static final int MAP_RS_REQUEST = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +145,7 @@ public class LokasiRumahSakitMapActivity extends AppCompatActivity {
 
         googleMapRumahsakit.addMarker(new MarkerOptions().position(koordinatMyLocation)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        GlobalVariable.SelectedCoordinate = koordinatMyLocation;
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(koordinatMyLocation).zoom(12).build();
         googleMapRumahsakit.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -153,11 +155,23 @@ public class LokasiRumahSakitMapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LokasiRumahSakitMapActivity.this, LokasiRumahSakitListActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, MAP_RS_REQUEST);
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+         if(requestCode == MAP_RS_REQUEST){
+            SetZoomLokasiRumahSakit();
+        }
+    }
 
+    private void SetZoomLokasiRumahSakit(){
+
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(GlobalVariable.SelectedCoordinate)
+                .zoom(12).build();
+        googleMapRumahsakit.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private class LokasiRumahSakitAsyncTask extends AsyncTask<Void, Void, Void> {

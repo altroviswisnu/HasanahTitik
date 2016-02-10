@@ -5,6 +5,7 @@ import com.altrovis.hasanahtitik.Entitties.HasanahPromo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -14,10 +15,10 @@ public class HasanahPromoHelper {
 
     private static String TAG_ID = "ID";
     private static String TAG_JUDUL = "Judul";
-    private static String TAG_CONTENTS = "Contents";
     private static String TAG_DATE_CREATED = "TanggalDiBuat";
     private static String TAG_DATE_START = "TanggalMulai";
     private static String TAG_DATE_END = "TanggalSelesai";
+    private static String TAG_URL = "Url";
 
     public static ArrayList<HasanahPromo> getListOfHasanahPromo(String url) throws Exception {
 
@@ -32,10 +33,10 @@ public class HasanahPromoHelper {
                     HasanahPromo hasanahPromo = new HasanahPromo();
                     hasanahPromo.setID(detailHasanahPromo.getInt(TAG_ID));
                     hasanahPromo.setNama(detailHasanahPromo.getString(TAG_JUDUL));
-                    hasanahPromo.setContents(detailHasanahPromo.getString(TAG_CONTENTS));
                     hasanahPromo.setDateCreated(detailHasanahPromo.getString(TAG_DATE_CREATED));
                     hasanahPromo.setDateStart(detailHasanahPromo.getString(TAG_DATE_START));
                     hasanahPromo.setDateEnd(detailHasanahPromo.getString(TAG_DATE_END));
+                    hasanahPromo.setUrlWebView(URLDecoder.decode(detailHasanahPromo.getString(TAG_URL), "UTF-8"));
                     listOfHasanahPromo.add(hasanahPromo);
                 }
             }

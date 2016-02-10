@@ -20,6 +20,7 @@ import com.altrovis.hasanahtitik.Business.LokasiATMAdapter;
 import com.altrovis.hasanahtitik.Business.LokasiATMHelper;
 import com.altrovis.hasanahtitik.Entitties.GlobalVariable;
 import com.altrovis.hasanahtitik.Entitties.LokasiATM;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class LokasiATMListActivity extends AppCompatActivity {
     ListView listViewLokasiATM;
     ArrayList<LokasiATM> listofATM;
     Context context;
+    AppCompatActivity activity;
     LokasiATMAdapter adapter;
     SwipeRefreshLayout refreshLayout;
 
@@ -36,7 +38,7 @@ public class LokasiATMListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokasi_atm_list);
 
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("List ATM");
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -59,6 +61,7 @@ public class LokasiATMListActivity extends AppCompatActivity {
         }
 
         context = LokasiATMListActivity.this;
+        activity = LokasiATMListActivity.this;
 
         listViewLokasiATM = (ListView) findViewById(R.id.ListViewLokasiATM);
         try {
@@ -76,7 +79,9 @@ public class LokasiATMListActivity extends AppCompatActivity {
         listViewLokasiATM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                LokasiATM atm = listofATM.get(position);
+                GlobalVariable.SelectedCoordinate = new LatLng(atm.getLatitude(), atm.getLongitude());
+                activity.finish();
             }
         });
     }
@@ -154,6 +159,8 @@ public class LokasiATMListActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
+            refreshLayout.setRefreshing(false);
         }
     }
 }
