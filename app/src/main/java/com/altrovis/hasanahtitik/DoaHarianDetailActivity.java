@@ -157,7 +157,5 @@ public class DoaHarianDetailActivity extends AppCompatActivity {
         @Override
         public void onReceivedTitle(WebView view, String title) {
         }
-
-
     }
 }

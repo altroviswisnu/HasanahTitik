@@ -4,10 +4,12 @@
     android:id="@+id/SwipeRefreshLayoutATM"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bggrad"
     tools:context="com.altrovis.hasanahtitik.LokasiATMListActivity">
 
     <ListView
         android:id="@+id/ListViewLokasiATM"
+        android:background="#00FFFFFF"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 

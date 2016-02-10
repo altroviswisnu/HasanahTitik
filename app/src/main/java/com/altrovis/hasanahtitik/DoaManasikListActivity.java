@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -32,7 +33,7 @@ public class DoaManasikListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doa_manasik_list);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Doa Manasik");
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -49,7 +50,7 @@ public class DoaManasikListActivity extends AppCompatActivity {
                     | Gravity.CENTER_VERTICAL);
             layoutParams.rightMargin = 10;
             layoutParams.width = 120;
-            layoutParams.height = 0;
+            layoutParams.height = 80;
             imageView.setLayoutParams(layoutParams);
             actionBar.setCustomView(imageView);
         }
