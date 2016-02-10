@@ -16,8 +16,7 @@ import java.util.ArrayList;
 
 public class HasanahTitikFragment extends Fragment {
 
-    public HasanahTitikFragment() {
-    }
+    public HasanahTitikFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,8 @@ public class HasanahTitikFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), JuzAmmaListActivity.class);
                     startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 6){
-
+                    Intent intent = new Intent(getActivity(), JadwalSholatActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -67,5 +67,4 @@ public class HasanahTitikFragment extends Fragment {
 
         return view;
     }
-
 }

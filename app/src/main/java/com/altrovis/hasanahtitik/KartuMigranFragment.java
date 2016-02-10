@@ -16,9 +16,7 @@ import java.util.ArrayList;
 
 public class KartuMigranFragment extends Fragment {
 
-    public KartuMigranFragment() {
-
-    }
+    public KartuMigranFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +46,11 @@ public class KartuMigranFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), DoaHarianListActivity.class);
                     startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 2) {
-
+                    Intent intent = new Intent(getActivity(), JadwalSholatActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 3) {
-
+                    Intent intent = new Intent(getActivity(), ArahKiblatActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 4) {
                     Intent intent = new Intent(getActivity(), FiturKartuMigranHasanahActivity.class);
                     startActivity(intent);
@@ -59,4 +59,5 @@ public class KartuMigranFragment extends Fragment {
         });
 
         return view;
-    }}
+    }
+}

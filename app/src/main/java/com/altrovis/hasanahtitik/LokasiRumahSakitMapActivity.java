@@ -46,7 +46,7 @@ public class LokasiRumahSakitMapActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Map Rumah Sakit");
+            actionBar.setTitle("Peta Rumah Sakit");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(false);
 

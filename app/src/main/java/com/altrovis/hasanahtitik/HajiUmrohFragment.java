@@ -17,8 +17,7 @@ import java.util.ArrayList;
 
 public class HajiUmrohFragment extends Fragment {
 
-    public HajiUmrohFragment() {
-    }
+    public HajiUmrohFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +50,11 @@ public class HajiUmrohFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), LokasiRumahSakitMapActivity.class);
                     startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 3) {
-
+                    Intent intent = new Intent(getActivity(), ArahKiblatActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 4) {
-
+                    Intent intent = new Intent(getActivity(), JadwalSholatActivity.class);
+                    startActivity(intent);
                 } else if (listOfMenu.get(position).getID() == 5) {
                     Intent intent = new Intent(getActivity(), JadwalBusActivity.class);
                     startActivity(intent);
@@ -63,5 +64,4 @@ public class HajiUmrohFragment extends Fragment {
 
         return view;
     }
-
 }
