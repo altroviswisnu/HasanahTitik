@@ -34,7 +34,7 @@ public class DoaManasikListActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Doa Sehari-hari");
+            actionBar.setTitle("Doa Manasik");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(false);
 
@@ -42,7 +42,7 @@ public class DoaManasikListActivity extends AppCompatActivity {
                     | android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView imageView = new ImageView(actionBar.getThemedContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setImageResource(R.drawable.logo);
+            imageView.setImageResource(R.drawable.Logo);
             android.support.v7.app.ActionBar.LayoutParams layoutParams = new android.support.v7.app.ActionBar.LayoutParams(
                     android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT,
                     android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT

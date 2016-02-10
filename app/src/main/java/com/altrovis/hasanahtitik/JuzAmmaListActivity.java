@@ -43,7 +43,7 @@ public class JuzAmmaListActivity extends AppCompatActivity {
                     | ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView imageView = new ImageView(actionBar.getThemedContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setImageResource(R.drawable.logo);
+            imageView.setImageResource(R.drawable.Logo);
             ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
                     ActionBar.LayoutParams.WRAP_CONTENT,
                     ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT

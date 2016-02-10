@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -18,15 +19,25 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    TextView textViewLokasi;
+    TextView textViewCurrentTime;
+    DateFormat dateFormatCurrentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,55 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
 
+        textViewLokasi = (TextView) findViewById(R.id.TextViewLokasi);
+        SetUpCurrentCity();
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        SetUpViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        textViewCurrentTime = (TextView) findViewById(R.id.TextViewCurrentTime);
+        dateFormatCurrentTime = new SimpleDateFormat("HH:mm", new Locale("id", "ID"));
+        SetCurrentLocalTime();
+        SetUpTimer();
+    }
+
+    private void SetUpTimer(){
+
+        final Handler mHandler = new Handler();
+        final Runnable mUpdateResults = new Runnable() {
+            public void run() {
+                SetCurrentLocalTime();
+            }
+        };
+
+        int delay = 1000;
+        int period = 1000;
+
+        Timer timer = new Timer();
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            public void run() {
+                mHandler.post(mUpdateResults);
+            }
+
+        }, delay, period);
+
+    }
+
+    private void SetCurrentLocalTime(){
+
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
+        Date currentLocalTime = cal.getTime();
+        textViewCurrentTime.setText(dateFormatCurrentTime.format(currentLocalTime));
+
+    }
+
+    private void SetUpCurrentCity(){
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -48,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
-        TextView textViewLokasi = (TextView) findViewById(R.id.TextViewLokasi);
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -67,20 +125,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void SetUpViewPager(ViewPager viewPager) {
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HajiUmrohFragment(), "Haji & Umroh");
         adapter.addFragment(new KartuMigranFragment(), "Kartu Migran");
         adapter.addFragment(new HasanahTitikFragment(), "Hasanah Titik");
         viewPager.setAdapter(adapter);
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
