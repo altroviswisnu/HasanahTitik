@@ -40,7 +40,7 @@ public class LokasiATMListActivity extends AppCompatActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("List ATM");
+            actionBar.setTitle("Daftar ATM");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(false);
 
